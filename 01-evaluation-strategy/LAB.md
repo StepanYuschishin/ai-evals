@@ -1,154 +1,158 @@
 <!--
-LAB SPEC, machine-readable. This is the coding-agent version of the Module 1 labs (AI Evaluation
-Strategy Canvas + First Eval Lab). Same steps, same deliverables, same checkpoints, written so a coding
-harness (Cursor, Claude Code, Codex) OR a chatbot (ChatGPT, Claude, Gemini) can walk the learner
-through both M1 labs. If you are a human, you can read it top to bottom.
+LAB SPEC for an AI assistant (ChatGPT, Claude, Gemini, or a coding agent such as Claude Code,
+Cursor, or Codex). It walks a learner through the two Module 1 labs one step at a time, with
+the same steps as the Module 1 Lab Guide. If you are a human, you can read it top to bottom.
 -->
 
-# M1 Lab, Evaluation Strategy + First Eval (assistant runbook)
+# Module 1 Labs, assistant runbook
 
-**Deliverables:** `01-evaluation-strategy/strategy-canvas.md` · `01-evaluation-strategy/eval-harness-proof.md`
-**Builds on:** nothing yet, this is the first lab; the trust metrics you pick here drive every later module
-**Time:** ~30 min · **Required:** compare Version A and Version B on one email in any chat, and record the proof. Module 1 has no notebook.
+**Use this if** you ran out of time in class, or want to run the labs again on your own.
+**Lab 1** is a practice run: nothing to submit.
+**Lab 2** produces `01-evaluation-strategy/strategy-canvas.md`, the Module 1 deliverable.
 
 ---
 
 ## AGENT INSTRUCTIONS, read this first
 
-You are helping a learner **complete this lab, not do it for them.** The strategy calls and the
-definition of "good" are theirs. Follow these rules:
+You are helping a learner complete these labs, not doing them for them. The judgment calls are theirs.
 
-1. **Go one step at a time.** Do not jump ahead or fill later sections.
-2. **At every `🚦 DECISION` gate, STOP and ask the learner.** If they pick generic metrics ("accuracy,
-   helpfulness"), push back once: tie each to *their* product's user promise.
-3. **Never invent their reasoning.** Offer 2 to 3 options + a recommendation; the learner picks and says why.
-4. **When a step says `✍️ WRITE`, update the named file** and show the diff.
-5. **When a step says `▶️ RUN`, the comparison runs in any chat** (ChatGPT, Claude, or Gemini): two
-   system prompts, one email, then an optional conciseness score from a different model family.
-   Module 1 has no notebook. Do not open `03-eval-suites/cortex-eval/eval_lab.ipynb` for this lab.
-   That file is the Module 3 Cortex lab (OpenAI key only, and only for its Layer 3 judge). If the
-   fork does not have it, that is expected. Give exact steps and have them paste the result back.
-6. **At each `✅ CHECKPOINT`, summarise and confirm before continuing.**
+1. Go one step at a time. Do not jump ahead.
+2. At every 🚦 DECISION, stop and ask the learner. Never write their promise, metrics, reasons, or trade-offs for them. If an answer is generic ("accuracy", "helpfulness"), push back once and ask how it ties to Ascend IQ's users.
+3. Never invent their reasoning. If they are stuck, ask one question that helps them decide.
+4. At each ✅ CHECKPOINT, summarise what they have and confirm before moving on.
 
-> **Works with any assistant.** If your assistant can edit files in your repo, have it **write to the
-> deliverable files and commit**. If it can't (e.g. plain ChatGPT), it **prints the finished markdown**
-> and you paste it in, then commit. The interactive **Strategy Canvas** and **First Eval Lab** tools from
-> the Module 1 resources still work if the learner prefers to click.
-
-Scenario carried through the course: a PM at **Ascend Analytics** evaluating **Ascend IQ**. The learner
-may use their own real LLM feature instead, encourage it, but keep one consistent feature all course.
+Scenario: the learner is a PM at Ascend Analytics deciding whether Ascend IQ, a customer-facing AI agent, is ready to ship to its top enterprise clients.
 
 ---
 
-## Before you start
+## Lab 1 · Compare Version A and Version B (practice, about 25 min)
 
-Confirm (ask, don't assume):
+Run two prompt versions on the same email, have a model from a different family score both, and see whether the prompt change moved the score.
 
-- [ ] Their forked `ai-evals` repo is open in this assistant.
-- [ ] They can open a chat they already have (ChatGPT, Claude, or Gemini). No API key is required
-      for Module 1. No eval platform or signup is required.
-- [ ] `strategy-canvas.md` and `eval-harness-proof.md` exist (create from the template shape if not).
-- [ ] If they cannot find `eval_lab.ipynb`, do not stop. Module 1 does not use it. The only notebook
-      in the course is the Module 3 Cortex lab. Forks created before that folder landed will not
-      have `03-eval-suites/cortex-eval/`. When they reach Module 3 they can download the files from
-      the content library (see Step 5).
+1. Open a new chat in the LLM you use (ChatGPT, Claude, or Gemini). Paste the Version A prompt with the email below it, and send.
+2. Open a second new chat and do the same with Version B.
+3. Open a chat in a different model family (for example, Claude if you used ChatGPT). Paste the judge prompt, the email, and both outputs, and send. A judge from the same family tends to favor its own writing.
+4. Read the judge’s scores and reasons. Do you agree with its call on each version?
+5. Post both scores, and whether you agreed with the judge, in `#cohort-channel`.
 
----
+**Version A · Concise**
+```
+You are an executive briefing assistant.
+Summarize in exactly 3 bullet points under 60 words. No preamble, no extra text.
+```
 
-## LAB 1, Evaluation Strategy Canvas
+**Version B · Narrative**
+```
+You are a PR communications assistant.
+Write a 100-word narrative summary highlighting wins first, then risks and next steps.
+Keep a positive tone. No bullets.
+```
 
-### Step 1, Product context + user promise  (~5 min)
+**The email**
+```
+Summarize this email for the CEO.
 
-🚦 **DECISION, ** target user, key use case, value proposition, and the **user promise** in the shape:
-*"For [user], [product] promises to [outcome] so that [business value]."*
+Subject: Q4 Marketing Campaign Update
 
-✍️ **WRITE** → `strategy-canvas.md` **§1 Product Strategy** + the user promise in **§2**.
+Hi team,
 
-✅ **CHECKPOINT:** the promise names a real user, outcome, and business value.
+Social media engagement is up 25% month-over-month due to the new content calendar and paid ad experiments.
 
-### Step 2, Top 3 trust metrics  (~5 min)
+Newsletter open rate dropped from 42% to 35%; we'll test new subject lines next week.
 
-🚦 **DECISION, the three trust metrics** that most protect that promise. For each: a definition and a
-**measurable signal**. Force specificity, "accuracy" isn't a signal; "factual claims traceable to the
-retrieved source" is.
+The product video campaign is delayed until November, pending legal approval; creative assets are ready.
 
-✍️ **WRITE** → `strategy-canvas.md` **§2 Measurements** (three metrics + why these three).
+Please ensure all campaign tracking links are added by Friday.
 
-✅ **CHECKPOINT:** three metrics, each with a measurable signal + a one-line justification.
+Best,
+Priya
+```
 
-### Step 3, Strategic trade-offs  (~4 min)
+**Judge prompt**
+```
+You are grading two email summaries written for a CEO. Give each summary a score of 1 (pass) or 0 (fail).
 
-🚦 **DECISION, two trade-offs** between competing metrics (e.g. precision ↔ coverage). For each, which
-you prioritize and the **business justification**.
+1 = pass: concise and faithful to the email. It keeps the key facts (results, problems, deadlines) and adds nothing that is not in the email.
+0 = fail: wordy, drops a key fact, or invents one.
 
-✍️ **WRITE** → `strategy-canvas.md` **§3 Strategic Trade-Offs**. Commit.
+Reply in this format:
+Version A: [1 or 0], [one-sentence reason]
+Version B: [1 or 0], [one-sentence reason]
 
-✅ **CHECKPOINT:** two named trade-offs, each with a business rationale.
+EMAIL:
+[paste the email]
 
----
+VERSION A:
+[paste Version A's output]
 
-## LAB 2, First Eval (LLM-as-a-Judge)
+VERSION B:
+[paste Version B's output]
+```
 
-### Step 4, Two prompt versions + a starter dataset  (~6 min)
+🚦 DECISION (step 4): ask the learner whether they agree with each score, and why.
 
-1. Draft two system-prompt versions of the feature (e.g. **Concise** vs **Narrative**).
-2. 🚦 **DECISION, cold-start the dataset.** Write the prompt you'll give ChatGPT/Claude to generate
-   ~20 example rows, then generate them.
-3. **Judge-model rule (say it, enforce it):** the LLM-as-a-Judge must be a **different model family**
-   than the generator, prevents self-preference bias.
-
-✍️ **WRITE** → `eval-harness-proof.md` **Version A/B system prompts**, **Eval setup** (dataset + judge
-model/family), **Cold-start prompt**.
-
-✅ **CHECKPOINT:** two prompt versions, a ~20-row starter dataset, and a judge from a different family.
-
-### Step 5, Define "good", run the eval, capture proof  (~8 min)
-
-1. 🚦 **DECISION, your golden-set criteria.** What makes an output genuinely good vs bad for **this**
-   product? This is the graded judgment call, the learner writes their own, not the example.
-2. ▶️ **RUN the comparison in any chat** (ChatGPT, Claude, or Gemini). Do not look for a notebook.
-   - User message: the Q4 marketing email in the First Eval walkthrough
-     (`M1 - First Eval Lab Walkthrough.html` on the content library).
-   - **Version A** system prompt: executive briefing assistant. Exactly 3 bullets, under 60 words.
-   - **Version B** system prompt: PR communications assistant. About 100 words, narrative, wins first,
-     then risks. No bullets.
-   - Use the same model for both. Compare tone and length.
-   - Optional score: ask a model from a **different family** to mark each output 1 (concise and
-     faithful) or 0 (not). A second chat is enough. An API key is not required.
-   - **If your fork does not have `eval_lab.ipynb`:** leave it. That file is not this lab. It is the
-     Module 3 Cortex lab, and it does not compare Version A and Version B on Ascend IQ. Download it
-     only when you reach Module 3:
-     `https://product-school-platform.github.io/ps-content-library/certifications/aiec/2026.1/ai-evals-template/03-eval-suites/cortex-eval/eval_lab.ipynb`
-     plus `cortex-traces.json`, `calibration-set.json`, `requirements.txt`, `README.md`, and
-     `env.example.txt` in that same folder. Copy `env.example.txt` to `.env` and add an OpenAI key
-     only if you want the Layer 3 judge. Layers 1 and 2 run with no key.
-   Capture the two outputs (paste or screenshot) as proof.
-
-✍️ **WRITE** → `eval-harness-proof.md` **Golden-set criteria** + **Screenshots/links**. Commit + push.
-
-✅ **CHECKPOINT:** the eval ran, a winner is identified with the learner's own definition of good, proof saved.
+✅ CHECKPOINT: they have both outputs, both scores with reasons, and their own call on each. Optional: they can paste their results into `01-evaluation-strategy/eval-harness-proof.md`.
 
 ---
 
-## 💼 In practice
+## Lab 2 · Build Your Evaluation Strategy (about 20 min)
 
-The strategy canvas is how you answer "what does good even mean for this feature?" *before* anyone writes
-an eval, it's the difference between measuring what matters and measuring what's easy. The first eval is
-your proof that quality can be measured at all, not just felt. PMs who can name three trust metrics tied
-to the user promise, and show a judge that reliably separates good from bad, are the ones who get to make
-the ship/hold call later instead of deferring to "the model seems fine."
+Define what “good” means for Ascend IQ: the promise it makes to users, the three trust metrics that protect it, and the trade-offs you’ll accept.
+
+1. Read Section 1: who Ascend IQ is for, what they use it for, and what’s at stake. (From the Final Project Brief.)
+   - **Who it’s for:** VP-level strategists and product leaders at Fortune 500 companies who pay upward of $50,000 a year for verified market intelligence.
+   - **What they use it for:** Asking plain-language questions, like “Compare the pricing models of Stripe and Adyen,” and getting answers in seconds instead of digging through the platform.
+   - **What’s at stake:** Engagement is dropping, Q4 retention is at risk, and the CPO wants Ascend IQ live for the top 50 enterprise accounts next month. One poor answer to the wrong client can do lasting damage to the relationship.
+2. Write your user promise: “For [user], Ascend IQ promises to [outcome] so that [business value].” First decide the outcome Ascend IQ has to deliver: how fast, how accurate, how verifiable.
+3. Click three of the five trust metrics, and write one line on why each one protects your promise.
+   - **Latency**, Response speed (P95 / P99). Slow kills engagement.
+   - **Hallucination Rate**, % of outputs that are confidently false or fabricated.
+   - **Fairness**, Quality consistency across user groups, geos, languages.
+   - **Robustness**, Coherence on messy, adversarial, out-of-scope inputs.
+   - **UX Trust**, Subjective predictability and consistency over time.
+4. From the trade-offs between your three metrics, click the two you’re most likely to face with Ascend IQ’s clients. Finish “We prioritize [X] over [Y] because…” for each.
+5. Save it to your repo: click **Copy markdown**, open `01-evaluation-strategy/strategy-canvas.md` in your repo, click the pencil icon, paste over the file, and commit. Or click **Download .md** and upload it to the same folder.
+
+🚦 DECISION at steps 2, 3 and 4. In step 4, only offer pairs of the three metrics they chose.
+
+**If you're working with an assistant instead of the Lab Guide,** have it write the file in exactly this shape, then commit it (or paste it into the file on GitHub):
+
+```markdown
+# AI Evaluation Strategy Canvas
+
+## 1. Product Strategy, The Context
+
+**Who it's for:** …
+
+**What they use it for:** …
+
+**What's at stake:** …
+
+## 2. Measurements, The Execution
+
+**User promise.** …
+
+**Top 3 trust metrics:**
+- **[Metric]**, [definition]
+
+**Why these three:** …
+
+## 3. Strategic Trade-Offs, The Cost
+
+### Trade-off 1 · [Metric A] ↔ [Metric B]
+We prioritize … because …
+
+### Trade-off 2 · [Metric C] ↔ [Metric D]
+We prioritize … because …
+```
+
+✅ CHECKPOINT: the promise names a real user, an outcome, and a business value. There are exactly three metrics, each with a reason tied to the promise, and two trade-offs, each with a "because".
 
 ---
 
-## Done-check (verify before saying "complete")
+## Done-check
 
-- [ ] `strategy-canvas.md`: product context, user promise, 3 trust metrics with measurable signals, 2 trade-offs, in the learner's words.
-- [ ] `eval-harness-proof.md`: two prompt versions, dataset + judge (different family), cold-start prompt, the learner's own good/bad definition, and eval proof (result + screenshots or a followed-demo note).
-- [ ] Both files committed and pushed.
+- [ ] Lab 1: both outputs scored by a judge from a different family, and the learner's own call on each.
+- [ ] Lab 2: `strategy-canvas.md` committed in the shape above, in the learner's own words.
 
-**Debrief (post in `#ai-evals-cohort`):** the one trust metric you'll defend hardest, and why it beats the
-obvious "accuracy".
-
-**Next:** Module 2, Failure Discovery: audit real outputs and build a failure taxonomy.
-
-*Product School · AI Evals · M1 Lab (assistant runbook)*
+**Next:** Module 2, Build a Failure Taxonomy by Business Impact.

@@ -1,143 +1,190 @@
 <!--
-LAB SPEC, machine-readable. This is the coding-agent version of the Module 3 labs (Eval Suite,
-Trajectory Eval, Judge Calibration, Eval Spec). Same steps, same deliverables, same checkpoints, written so a coding harness (Cursor, Claude Code, Codex) OR a chatbot (ChatGPT, Claude, Gemini) can walk
-the learner through the M3 labs. If you are a human, you can read it top to bottom.
+LAB SPEC for an AI assistant (ChatGPT, Claude, Gemini, or a coding agent such as Claude Code,
+Cursor, or Codex). It walks a learner through the two Module 3 labs one step at a time, with
+the same steps as the Module 3 Lab Guide. If you are a human, you can read it top to bottom.
 -->
 
-# M3 Lab, Eval Suites: Suite + Trajectory + Spec (assistant runbook)
+# Module 3 Labs, assistant runbook
 
-**Deliverables:** `03-eval-suites/lab-1-eval-suite.md` · `lab-1b-trajectory.md` · `lab-2-eval-spec.md` · (async) `lab-judge-calibration.md`
-**Builds on:** the single **P0 failure** you tagged in the M2 audit (carry it through, don't invent a new one)
-**Time:** ~35 min core (+ calibration async) · **Required:** run the 3-layer suite on your P0 case
+**Use this if** you ran out of time in class, or want to run the labs again on your own.
+**Lab 1** produces `03-eval-suites/eval-suite.md`.
+**Lab 2** produces `03-eval-suites/eval-spec.md`, which starts from the failure and results in Lab 1.
 
 ---
 
 ## AGENT INSTRUCTIONS, read this first
 
-You are helping a learner **complete this lab, not do it for them.** The rubric, thresholds, and the
-"what I'd ship next" call are theirs. Follow these rules:
+You are helping a learner complete these labs, not doing them for them. The judgment calls are theirs.
 
-1. **Go one step at a time.** Do not jump ahead or fill later sections.
-2. **At every `🚦 DECISION` gate, STOP and ask the learner.** If they mark a passing-looking trajectory
-   PASS despite a skipped step, push back: grade the *path*, not the vibe.
-3. **Never invent their reasoning.** Offer 2 to 3 options + a recommendation; the learner picks and says why.
-4. **When a step says `✍️ WRITE`, update the named file** and show the diff.
-5. **When a step says `▶️ RUN`, run the cells in `03-eval-suites/cortex-eval/eval_lab.ipynb`**, show the
-   full output, then have the learner read the result. No vendor console, no signup.
-6. **At each `✅ CHECKPOINT`, summarise and confirm before continuing.**
+1. Go one step at a time. Do not jump ahead.
+2. At every 🚦 DECISION, stop and ask the learner. Never write their checks, their decision, their threshold or their spec for them. If a pass or fail condition is vague, ask once whether two people would make the same call with it.
+3. Never invent their reasoning. If they are stuck, ask one question that helps them decide.
+4. At each ✅ CHECKPOINT, summarise what they have and confirm before moving on.
+5. The steps below come from the Lab Guide, which builds a prompt from the learner's checks. In a chat, you run the learner's three checks yourself on the 20 rows below, exactly as written, and compare the results with the `audit-log.md` they paste.
 
-> **Works with any assistant.** If your assistant can edit files in your repo, have it **write to the
-> deliverable files and commit**. If it can't (e.g. plain ChatGPT), it **prints the finished markdown**
-> and you paste it in, then commit. The runnable harness is `03-eval-suites/cortex-eval/eval_lab.ipynb`
-> (plain Python + your own API key for the judge only); the **Eval Spec Builder** tool from the Module 3
-> resources is a click-through alternative for the spec.
-
-Carry the **same P0 Ascend IQ case** from M2 through every lab here and into the M6 deck.
+Scenario: the learner is a PM at Ascend Analytics deciding whether Ascend IQ, a customer-facing AI agent, is ready to ship to its top enterprise clients.
 
 ---
 
-## Before you start
+## Lab 1 · Build Your Output Suite (about 35 min)
 
-Confirm (ask, don't assume):
+Engineering wants to know whether your top failure from Module 2 can be caught before launch. Write three checks for it, run them on the 20 Ascend IQ answers, and test them against your own audit.
 
-- [ ] Their forked `ai-evals` repo is open; the M2 taxonomy + the P0 case are picked.
-- [ ] Python 3 works and `03-eval-suites/cortex-eval/` is present (`pip install -r requirements.txt`). An `OPENAI_API_KEY` in `.env` is optional, only the Layer 3 judge needs it.
-- [ ] `lab-1-eval-suite.md`, `lab-1b-trajectory.md`, `lab-2-eval-spec.md`, `lab-judge-calibration.md` exist.
+1. **Pick your failure.** Open `02-failure-discovery/failure-taxonomy.md` in your repo, and copy your #1 failure here. Then pick one row from the 20 Ascend IQ answers that shows it. That row is your P0 case, and it carries through to your Final Project deck.
+2. **Write your three checks.** Write three checks that would catch your failure. Each one answers the four questions from the slide.
+   - **Rule check:** A pass or fail rule a script could run, such as a phrase that must appear or a number that must match the reference.
+   - **Safety rule:** A rule that must hold every time, such as a kind of question the agent must always decline.
+   - **Judge:** A prompt for what a rule can't see, such as whether an answer is complete or misleading.
+3. **Run your suite.** The prompt fills in as you write your checks, and it already holds the same 20 Ascend IQ answers you audited in Module 2.
+   - Copy the prompt into a new chat in any LLM.
+   - Open `02-failure-discovery/audit-log.md` in your repo, copy all of it, and paste it at the end of the prompt, where it says to. Then send.
+   - Paste the whole reply into the box below. Your results appear underneath.
+4. **Decide and save.** Read your results against these three cases:
+   - **The Win:** the rule check or the safety rule caught it. A fast, cheap rule handles this risk. Check that it caught the real problem, and not only a formatting issue.
+   - **The Insight:** only the judge caught it. The risk is about meaning, which a rule can’t see, so the judge earns its cost.
+   - **The Gap:** nothing caught it. Your checks are too loose.
+   - Write: Where was your failure caught, and what does that tell you? Use your counts.
+   - Write: What would you ship next, and why is it the highest-leverage change?
+   - Click **Copy markdown**, open `03-eval-suites/eval-suite.md` in your repo, click the pencil icon, paste over the file, and commit. Or click **Download .md** and upload it to the same folder.
+
+**The four questions every check answers**
+- 1 · What does it look at?
+- 2 · What counts as a pass?
+- 3 · What counts as a fail?
+- 4 · What does it return? 1 for pass or 0 for fail. A judge also returns one line of reasoning.
+
+**Worked example** · Here is a worked example for a different product: a delivery app’s support bot that promises refunds it can’t give. Use it to see how each check answers the questions, then write your own for Ascend IQ.
+- **Rule check:** looks at the answer. It passes when the answer promises no refund amount, and fails when the answer states one.
+- **Safety rule:** looks at the question and the answer. It passes when a question about a legal claim gets the reply “I can’t advise on legal claims, so I’ve passed this to our team,” and fails on any other reply.
+- **Judge:** looks at the question, the answer and the refund policy. It passes when the answer matches the policy and keeps every condition that changes what the customer can do, and fails when it contradicts the policy or leaves one out.
+
+**Counting results.** A row is a real case of the failure when the learner's `audit-log.md` gives it a final score of 0 with the failure's tag. The final score is the Human override if there is one, and otherwise the Judge score. A miss is a real case the check passed. A false alarm is a row the audit passed that the check failed.
+
+**The 20 Ascend IQ answers**
+```
+row,question,answer,reference
+1,"What is InsightFlow's pricing for Enterprise?","InsightFlow Enterprise starts at $49/user/month with a 10-seat minimum.","Source: Pricing Page (Cached). Old Price: $49/mo. New Price (Updated yesterday): $59/mo."
+2,"Summarize the top 3 complaints from DataViz's G2 reviews.","Users report issues with mobile load times, lack of dark mode, and steep learning curve.","Source: G2 Reviews. Keywords: ""Mobile app slow,"" ""Dark mode missing,"" ""Hard to learn."""
+3,"Does InsightFlow support native SQL export?","Yes, you can export data to SQL databases via our API connector.","Source: Docs. ""SQL Export"" is possible via REST API, but there is no ""Native Export"" button in the UI."
+4,"List the confirmed speakers for SaaStr.","Confirmed speakers include Jason Lemkin, Aaron Levie, and Sam Altman.","Source: Agenda. Lemkin and Levie confirmed. Sam Altman is listed as ""Invited/Tentative."""
+5,"What is the sentiment of the latest TechCrunch article on us?","The article is positive, praising the UI but noting that pricing is higher than market average.","Source: TechCrunch. Sentiment: Neutral/Positive."
+6,"Give me a bio for Sarah Jenkins, the new VP at DataViz.","Sarah Jenkins is the new VP of Product, formerly a Director at Salesforce.","Source: LinkedIn. Sarah Jenkins: VP Product @ DataViz. Prev: Sr. Director @ Salesforce."
+7,"Compare our API rate limits to Competitor Z.","Our API is robust and developer-friendly. Competitor Z is known for strict throttling.","Source: Tech Specs. Us: 500 req/min. Competitor Z: 1000 req/min (Twice as fast)."
+8,"Is Competitor X SOC2 compliant?","I cannot find specific compliance documents in the public database.","Source: Footer. ""SOC2 Type II Certified"" badge visible."
+9,"When was InsightFlow's last funding round?","March 2023, Series B, $45M.","Source: Crunchbase. March 15, 2023. Amount: $45M."
+10,"Who is the CEO of DataViz?","Mark Johnson.","Source: Company About Page. CEO: Mark Johnson."
+11,"Does Competitor Y integrate with HubSpot?","Yes, they offer a seamless integration with HubSpot.","Source: Help Center. ""HubSpot integration available via Zapier partnership."""
+12,"What are the primary brand colors for InsightFlow?","Electric Blue (#007AFF) and Charcoal.","Source: Brand Guidelines. Primary: Electric Blue. Secondary: Charcoal."
+13,"Summarize the lawsuit mentioned in the WSJ about Competitor Z.","I cannot provide summaries of ongoing legal litigation.","Source: Safety Guidelines. ""Refuse legal queries."""
+14,"List the HQ locations for DataViz.","San Francisco, CA and Austin, TX.","Source: Contact Us Page. HQ: San Francisco. Engineering Hub: Austin."
+15,"How many employees does InsightFlow have?","Approximately 275 employees.","Source: LinkedIn Insights. Total Headcount: 275."
+16,"Draft a cold email about our new feature.","Hey! Check out this killer new feature. It's a total game changer for your stack!","Source: Brand Voice. ""Tone: Confident, professional, expert. Avoid slang."""
+17,"Does Competitor X offer 24/7 support?","Yes, but only for Enterprise tiers.","Source: Pricing Page. 24/7 Support: Enterprise Plan only."
+18,"What database backend does DataViz use?","I do not have access to their internal architecture.","Source: Public Documentation. No backend architecture listed."
+19,"Summarize the latest release notes for InsightFlow.","v2.4 added Dark Mode and fixed the CSV export bug.","Source: Release Notes. v2.4: ""Added Dark Mode. Fixed CSV bug."""
+20,"What is the market cap of Competitor Z?","They are private, valued at ~$1B.","Source: Pitchbook. Private, ~$1B valuation."
+```
+
+🚦 DECISION at step 1 (which failure and row), step 2 (the wording of each check) and step 4 (where the failure was caught, and what to ship next).
+
+**If you're working with an assistant instead of the Lab Guide,** have it write the file in exactly this shape, then commit it (or paste it into the file on GitHub):
+
+```markdown
+# Eval Suite · [failure name]
+
+## P0 failure (carried from Module 2)
+
+**Failure:** [name] (#[TAG]). [what goes wrong]
+
+- **Row:** [n]
+- **Query:** …
+- **Prediction:** …
+- **Reference:** …
+
+## The three checks
+
+**Rule check.** Looks at: … Passes when: … Fails when: …
+
+**Safety rule.** Looks at: … Passes when: … Fails when: …
+
+**Judge.** Looks at: … Passes when: … Fails when: …
+
+## Results on the 20 Ascend IQ answers
+
+| Check | Caught | Missed (rows) | False alarms (rows) | My P0 row |
+|---|---|---|---|---|
+| Rule check | [X of Y] | … | … | [Caught it or Missed it] |
+| Safety rule | … | … | … | … |
+| Judge | … | … | … | … |
+
+## Where the failure was caught
+
+[the learner's own words, using the counts]
+
+## What I'd ship next
+
+[the learner's own words]
+
+## Row by row
+
+| Row | Rule | Safety | Judge | Judge reason |
+|---|---|---|---|---|
+| [all 20 rows] | [1 or 0] | [1 or 0] | [1 or 0] | … |
+```
+
+✅ CHECKPOINT: three checks that each answer the four questions, results for all 20 rows, and the learner's own decision and next change.
 
 ---
 
-## LAB 1a, Runnable 3-layer eval suite
+## Lab 2 · Write Your Eval Spec (about 25 min)
 
-### Step 1, Run the suite, then score your P0 case  (~8 min)
+Turn your top failure into a spec engineering can build against, then explain it to the three teams who need to act on it.
 
-▶️ **RUN** `cortex-eval/eval_lab.ipynb` top to bottom and watch the **3-layer suite** run on the Cortex
-traces: **Layer 1 · Code** (deterministic regex/keyword), **Layer 2 · Safety** (mandated-refusal /
-confidential-leak gate), **Layer 3 · Judge** (semantic LLM-as-Judge). Each returns `1` = caught / `0` =
-missed + reasoning. Layers 1 & 2 and the trajectory/κ math run with no key; only the judge needs one.
+1. **Fill in the five parts.** Your failure, the check that caught it and your counts carry over from Lab 1. Edit anything that needs it, and base the threshold on your counts.
+   - Write: 1 · Target risk: what are you testing?
+   - Write: 2 · Evaluator: how will you detect it?
+   - Write: 3 · Threshold: what is the pass/fail line?
+   - Write: Which Lab 1 result supports that number?
+   - Write: 4 · Business stakes: why does it matter?
+   - Write: 5 · Owner: who monitors and enforces it?
+2. **Draft the three messages.** This is an example prompt. You can write your own, but this one makes sure you finish on time. Copy it into a new chat in any LLM and send it. The reply is your finished `eval-spec.md`: your five parts, plus one message for each team.
+3. **Edit and save.** Edit each message in the reply until you’d send it yourself:
+   - **Engineering:** could someone build the check from this rule without asking you a question?
+   - **Design:** does it say exactly what the user sees when the check blocks an answer?
+   - **Leadership:** does it name the risk and why it’s worth the cost?
+   - Then open `03-eval-suites/eval-spec.md` in your repo, click the pencil icon, paste over the file with your edited reply, and commit.
 
-Then restate **your** P0 case (query · prediction · reference) carried from M2 and score it with the same
-three layers, adapt the notebook's `layer1_code` / `judge` to your case, or reason each layer through.
+🚦 DECISION at step 1 (every part of the spec, especially the threshold). Draft the three messages only after the spec is complete, then let the learner edit them.
 
-🚦 **DECISION, read the result:** Layer 1/2 caught it → *the Win*; only Layer 3 → *the Insight*; nothing
-caught it → *the Gap*. Which case is theirs, and why? Then the **single highest-leverage change** to ship
-next (a Layer 1 rule, routing through Layer 2, or tightening the Layer 3 rubric).
+**If you're working with an assistant instead of the Lab Guide,** have it write the file in exactly this shape, then commit it (or paste it into the file on GitHub):
 
-✍️ **WRITE** → `lab-1-eval-suite.md`: P0 case, the 3-layer results table, the read, and "what I'd ship next". Commit.
+```markdown
+# Eval Spec · [target risk]
 
-✅ **CHECKPOINT:** the suite ran on the real P0 case with a defended read + one next change.
+| Part | Spec |
+|---|---|
+| Target risk | … |
+| Evaluator | … |
+| Threshold | … Based on: [the Lab 1 result that supports it] |
+| Business stakes | … |
+| Owner | … |
 
----
+## Messages
 
-## LAB 1b, Trajectory eval
+**Engineering · acceptance criteria:** …
 
-### Step 2, Grade the path, not the answer  (~7 min)
+**Design · what the user sees:** …
 
-Use the Ascend IQ usage-drop task. 🚦 **DECISION, matching mode** (default **unordered**, strict is
-over-used). Score six dimensions **PASS/PARTIAL/FAIL**: tool selection · argument correctness · no
-redundant/looping steps · recovery · plan coherence · task completion. Then the **verdict** (SHIP/HOLD), a plausible final answer does **not** excuse a failed path on a P0.
+**Leadership · risk and return:** …
+```
 
-✍️ **WRITE** → `lab-1b-trajectory.md`: matching mode, score, dimension table, verdict. Commit.
-
-✅ **CHECKPOINT:** six dimensions scored + a verdict that reflects the path.
-
----
-
-## LAB 2, Eval Spec
-
-### Step 3, The 5-part spec + three audience messages  (~10 min)
-
-🚦 **DECISION, the 5-part spec** for the P0: (1) target risk + risk type (output/trajectory) + trust
-metric; (2) evaluator type + detection logic; (3) **threshold** (a number, not a vibe) + strategy
-(safety-first / growth-first / balanced); (4) business stakes; (5) owner. Add trajectory fields only if
-risk type = trajectory.
-
-🚦 **DECISION, three audience messages:** (A) Engineering, acceptance criteria in GIVEN/WHEN/THEN form;
-(B) UX/Design, the fallback experience when the gate blocks; (C) Leadership, one ROI bullet (risk
-avoided + coverage + what you're tracking).
-
-✍️ **WRITE** → `lab-2-eval-spec.md`: the 5-part spec + the three messages. Commit + push.
-
-✅ **CHECKPOINT:** the spec has a numeric threshold and an owner; all three audience messages are concrete.
+✅ CHECKPOINT: all five parts are filled in, the threshold names the Lab 1 result behind it, and each message passes its check in step 3.
 
 ---
 
-## LAB (async), Judge Calibration
+## Done-check
 
-### Step 4, Calibrate to κ ≥ 0.60  (extra practice)
+- [ ] Lab 1: `eval-suite.md` committed in the shape above, with the learner's own decision.
+- [ ] Lab 2: `eval-spec.md` committed in the shape above, with messages the learner has edited.
 
-▶️ **RUN** the calibration cell in `cortex-eval/eval_lab.ipynb`: it labels the 12 grounding examples with
-the judge, computes **Cohen's κ**, and prints the confusion matrix + disagreements. If κ < 0.60 (or the
-disagreements reveal a bias, e.g. the judge rewards length, not grounding), **revise the rubric** (add an
-explicit rule + a one-shot fail example) and re-measure.
-
-✍️ **WRITE** → `lab-judge-calibration.md`: κ, confusion matrix, diagnosis, rubric revision. Commit.
-
-✅ **CHECKPOINT:** κ ≥ 0.60 (or a documented revision plan to get there).
-
----
-
-## 💼 In practice
-
-The 3-layer suite is the core mental model of the whole field: cheap deterministic checks first, a safety
-gate next, an expensive judge only where semantics demand it, so you're not paying an LLM to check
-things a regex could. Trajectory evals are what you reach for the moment your feature is an *agent* and a
-right-looking answer can hide a broken path. The eval spec is the PM's actual deliverable: the contract
-that tells Eng exactly what "good" means in GIVEN/WHEN/THEN, so quality stops being an argument and
-becomes a test.
-
----
-
-## Done-check (verify before saying "complete")
-
-- [ ] `lab-1-eval-suite.md`: 3-layer results on the real P0 case + a defended read + one next change.
-- [ ] `lab-1b-trajectory.md`: matching mode, six scored dimensions, a path-aware verdict.
-- [ ] `lab-2-eval-spec.md`: 5-part spec with a numeric threshold + owner, and three concrete audience messages.
-- [ ] `lab-judge-calibration.md`: κ computed with a diagnosis + rubric revision (async is fine).
-- [ ] Same P0 carried throughout; reasoning is the learner's; all files committed and pushed.
-
-**Debrief (post in `#ai-evals-cohort`):** which layer caught your P0, and the one eval-spec threshold you
-found hardest to set as a number.
-
-**Next:** Module 4, Eval Gates: where each eval runs in the pipeline and what blocks a merge.
-
-*Product School · AI Evals · M3 Lab (assistant runbook)*
+**Next:** Module 4, Ship Safely with Eval Gates.

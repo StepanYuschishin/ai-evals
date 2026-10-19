@@ -4,7 +4,7 @@
 
 This is a **template repo**. Click **Use this template → Create a new repository**, name it `ai-evals` (or `<your-feature>-evals`), and fill in one folder per module as you go. The repo URL is your submission.
 
-> **Tools & cost.** No eval platform, no signup, no credit card. **Module 1 has no notebook.** Compare Version A and Version B in any chat (ChatGPT, Claude, or Gemini) and record the proof in `01-evaluation-strategy/eval-harness-proof.md`. The only runnable notebook is the **Module 3 Cortex lab**, [`03-eval-suites/cortex-eval/eval_lab.ipynb`](03-eval-suites/cortex-eval/). It scores recorded Cortex traces. It does not compare prompt versions on Ascend IQ. Layers 1 and 2 and the Cohen's κ math run with **no key at all**. Only the Layer 3 judge calls OpenAI (`OPENAI_API_KEY`, default model `gpt-4o-mini`), typically a few cents. If your fork does not have that folder, download it from the content library when you reach Module 3 (links are in the Module 1 pre-read). Prefer a dashboard? LangSmith, Braintrust, or Phoenix are optional. Keep model keys in a gitignored `.env`, never commit them. Copy `env.example.txt` to `.env` (same contents as `.env.example`).
+> **Tools & cost.** No eval platform, no signup, no credit card, and no code. Every lab runs in any chat, such as ChatGPT, Claude or Gemini, and the Lab Guide for each module gives you the prompts. Prefer a dashboard? LangSmith, Braintrust or Phoenix are optional.
 
 ---
 
@@ -13,13 +13,10 @@ This is a **template repo**. Click **Use this template → Create a new reposito
 | Module | Artifact | Status | File |
 |---|---|---|---|
 | M1 | **Evaluation Strategy Canvas** | ☐ | `01-evaluation-strategy/strategy-canvas.md` |
-| M1 | **Eval harness proof** (links + screenshots) | ☐ | `01-evaluation-strategy/eval-harness-proof.md` |
 | M2 | **Failure audit log** | ☐ | `02-failure-discovery/audit-log.md` |
 | M2 | **Failure Taxonomy** | ☐ | `02-failure-discovery/failure-taxonomy.md` |
-| M3 | **Runnable eval suite** (results) | ☐ | `03-eval-suites/lab-1-eval-suite.md` |
-| M3 | **Trajectory eval** (scorecard) | ☐ | `03-eval-suites/lab-1b-trajectory.md` |
-| M3 | **Judge calibration** (κ) | ☐ | `03-eval-suites/lab-judge-calibration.md` |
-| M3 | **Eval Spec** (5-part spec + audience messages) | ☐ | `03-eval-suites/lab-2-eval-spec.md` |
+| M3 | **Eval suite** (three checks and their results) | ☐ | `03-eval-suites/eval-suite.md` |
+| M3 | **Eval spec** (five parts and three team messages) | ☐ | `03-eval-suites/eval-spec.md` |
 | M4 | **Eval gate map** (severity × placement) | ☐ | `04-eval-gates/lab-1-gate-map.md` |
 | M4 | **CI gate policy** (PR #218 replay) | ☐ | `04-eval-gates/lab-ci-gate-policy.md` |
 | M4 | **Launch strategy** (release criteria + CI policy + mitigation) | ☐ | `04-eval-gates/lab-2-launch-strategy.md` |
@@ -39,14 +36,14 @@ _What LLM feature are you evaluating, who relies on it, and what is the cost of 
 **The guided way (recommended): paste the module's `LAB.md` into your AI assistant.**
 Each module folder ships a **`LAB.md`** runbook written *for your assistant* (ChatGPT, Claude,
 Gemini, Cursor, Claude Code, Codex). Paste it in and it walks you through the module's labs one step
-at a time, asking your decisions, telling you exactly which cells (or commands) to run, and writing
+at a time, asking your decisions, telling you exactly what to run, and writing
 each deliverable file for you to commit.
 
 | Module | Paste this into your assistant | Writes |
 |---|---|---|
-| M1 | `01-evaluation-strategy/LAB.md` | strategy canvas + eval harness proof |
+| M1 | `01-evaluation-strategy/LAB.md` | strategy canvas |
 | M2 | `02-failure-discovery/LAB.md` | audit log + failure taxonomy |
-| M3 | `03-eval-suites/LAB.md` | eval suite + trajectory + spec (+ calibration) |
+| M3 | `03-eval-suites/LAB.md` | eval suite + eval spec |
 | M4 | `04-eval-gates/LAB.md` | gate map + CI policy + launch strategy |
 | M5 | `05-scale/LAB.md` | coverage matrix + budget crisis |
 | M6 | `06-culture/LAB.md` | ship/hold memo + final pitch |
@@ -75,16 +72,14 @@ See [`PROMPTS.md`](PROMPTS.md) for the quick-reference prompts.
 ai-evals/
 ├── README.md                         ← this dashboard
 ├── 01-evaluation-strategy/           ← Module 1
-│   ├── strategy-canvas.md            from the Strategy Canvas tool
-│   └── eval-harness-proof.md         from the first eval lab
+│   ├── strategy-canvas.md            from the Module 1 Lab Guide, Activity 2
+│   └── eval-harness-proof.md         optional notes from Activity 1
 ├── 02-failure-discovery/             ← Module 2
 │   ├── audit-log.md                  scored audit of real outputs
 │   └── failure-taxonomy.md           prioritized failure modes
 ├── 03-eval-suites/                   ← Module 3
-│   ├── lab-1-eval-suite.md           runnable 3-layer suite results
-│   ├── lab-1b-trajectory.md          trajectory scorecard
-│   ├── lab-judge-calibration.md      judge calibration (κ)
-│   └── lab-2-eval-spec.md            5-part eval spec + audience messages
+│   ├── eval-suite.md                 three checks and their results
+│   └── eval-spec.md                  five-part spec and three team messages
 ├── 04-eval-gates/                    ← Module 4
 │   ├── lab-1-gate-map.md             severity × pipeline-placement grid
 │   ├── lab-ci-gate-policy.md         CI gate demo (PR #218 replay)
