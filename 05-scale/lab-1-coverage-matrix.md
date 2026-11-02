@@ -1,35 +1,28 @@
-# Lab 1, Ascend Analytics Coverage Matrix
+# Module 5 · Coverage Matrix · AI Report Summaries
 
-> Repo file `ai-evals/05-scale/lab-1-coverage-matrix.md`. Feeds the **Coverage / scale** slide of the final pitch deck (Module 6).
->
-> Fill this with the **Coverage Matrix Tool**, then **Copy markdown** and paste it over this file. The headings below mirror the tool's output exactly. **Force ≥2 ❌ gaps** — an all-green matrix isn't real.
+## Coverage Row
 
-**Product:** _…_
-
-## Coverage row
-
-| Product | Hallucination | Bias | Latency | Toxicity | Drift Monitoring |
+| Product | Hallucination Rate | Fairness | Latency | UX Trust | Robustness |
 |---|---|---|---|---|---|
-| _…_ | _✅ / ⚠️ / ❌_ | _✅ / ⚠️ / ❌_ | _✅ / ⚠️ / ❌_ | _✅ / ⚠️ / ❌_ | _✅ / ⚠️ / ❌_ |
+| AI Report Summaries | ✅ Covered | ❌ Gap | ⚠️ Partial | ❌ Gap | ❌ Gap |
 
-## Method + Ground Truth (two ✅/⚠️ cells)
+## What Runs Today
 
-### _Risk name 1_
-- **Method:** _how you evaluate it_
-- **Ground truth:** _what you grade against_
+- An LLM judge compares each summary with its source report before every release.
+- Response time is logged, but nobody has set a target.
 
-### _Risk name 2_
-- **Method:** _how you evaluate it_
-- **Ground truth:** _what you grade against_
+## Accepted Gap
 
-## Strategic acceptance
+**UX Trust.** We temporarily defer automated tone evaluation while prioritizing failures that could omit or distort decision-critical information. This accepts an unmeasured client-facing tone risk; the existing source-comparison judge does not cover it.
 
-**Accepted gap:** _which ❌ you're accepting_
+We’ll look again: Review this decision in 2 weeks, or immediately after any client complaint about misleading, overconfident, or inappropriate tone.
 
-> _Why it's an acceptable risk right now + the kill criterion / date that would change the call._
+## Critical Gap
 
-## Critical mitigation
+Robustness is the most critical uncovered risk because malformed, unusually long, or instruction-injected reports could cause failed summaries or missing decision-critical content. Clients may notice first, leading to poor decisions and loss of trust. QA will add a regression set covering long reports, tables, missing sections, conflicting statements, and embedded instructions, run before every release. A source-grounded judge will check task completion and critical omissions, with human review of flagged cases. QA will also audit 20 live summaries weekly and add confirmed failures to the regression set.
 
-- **Critical gap:** _the ❌ you cannot accept_
-- **Why critical:** _…_
-- **Mitigation plan:** _concrete plan with a date/owner — not "we'll add it later"._
+## After the Pressure Test
+
+The feedback showed that accepting UX Trust as low risk was not justified for client-facing summaries. I added a proposed temporary human tone spot-check and kept the 2-week review. UX Trust remains a Gap until those checks actually begin.
+
+I strengthened the robustness plan with explicit pass/fail criteria, QA-maintained reference cases approved by the PM, and sampling across report formats, lengths, languages, and client segments. Checks will run before every release, with 20 live summaries audited weekly, including some judge-passed cases. Critical failures will pause automated delivery for affected cases and route them to human review.
