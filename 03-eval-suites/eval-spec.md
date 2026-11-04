@@ -1,18 +1,17 @@
-# Eval Spec · Missing available SOC evidence
-
-Status: redesigned specification; independent execution and human calibration pending.
+# Eval Spec · #HALLUCINATION: The agent presents an outdated Enterprise price as current or states unsupported pricing conditions.
 
 | Part | Spec |
 |---|---|
-| Target risk | Agent says SOC evidence is unavailable although the supplied reference explicitly states a certification |
-| Evaluator | Compare query, answer and reference together. For SOC questions, fail if explicit certification evidence is refused, contradicted or omitted. Pass unrelated questions for this narrow check. Without certification evidence, permit explicit uncertainty. Attribute a badge to the source; do not claim an independently verified audit or invent scope/dates. |
-| Threshold | Proposed regression acceptance: detect known row 8, zero missed matching failures, zero false alarms on adjudicated passing rows. These are targets, not achieved results. Validate on held-out cases before enabling a gate. |
-| Business stakes | Misleading vendor screening, procurement delay and reduced client trust |
-| Owner | QA owns labeled cases and error review; Engineering implements and fixes retrieval/generation; PM approves acceptance criteria and release; domain reviewer confirms material compliance interpretation |
+| Target risk | #HALLUCINATION: The agent presents an outdated Enterprise price as current or states unsupported pricing conditions. |
+| Evaluator | For the InsightFlow Enterprise pricing regression case, use a deterministic check: pass only when the answer includes the current $59 price and does not present $49 as current. Pass unrelated questions. Separately, use a source-grounded judge to check whether billing units, minimum-seat requirements and other material pricing qualifications are supported by the reference. |
+| Threshold | The pricing rule must flag the known outdated-price answer in row 1. On the audited regression set, require zero missed matching outdated-pricing cases and zero false alarms on audit-passed rows. These are acceptance criteria; final counts must come from the completed Lab 1 comparison. Supporting evidence: In the latest 20-row evaluation, all three checks flagged row 1 and passed the other 19 rows. This demonstrates detection of the known outdated-price example, but does not establish general detection accuracy. Caught, missed and false-alarm counts require comparison with the final Module 2 audit. |
+| Business stakes | Presenting outdated prices or unsupported purchasing conditions can mislead enterprise budgeting and vendor-selection decisions, undermine trust in Ascend IQ and put account renewals at risk. |
+| Owner | PM owns acceptance criteria and the release decision. QA maintains approved regression cases and reviews false alarms and misses. Engineering implements the checks. The designated pricing-data owner keeps the approved reference current and versioned. |
 
 ## Messages
-**Engineering · acceptance criteria:** Implement the query/answer/reference check above. Report TP, FN, FP and TN against approved labels, and demonstrate expected handling of missing evidence and unrelated queries before blocking releases.
 
-**Design · what the user sees:** If an enabled control blocks a response, show that the source evidence needs review and offer human escalation; do not imply certification is absent or verified without support.
+**Engineering · acceptance criteria:** For the InsightFlow Enterprise pricing regression case, return 1 only if the answer includes $59 as the current price and does not present $49 as current; otherwise return 0, and return 1 for unrelated questions. Separately, have the source-grounded judge fail pricing answers that state unsupported billing units, minimum-seat requirements or other material pricing qualifications; acceptance requires flagging row 1, zero missed matching outdated-pricing cases and zero false alarms on audit-passed rows, with final counts verified against the completed Lab 1 audit.
 
-**Leadership · risk and return:** This targets a known vendor-screening failure. Retain HOLD on broad launch until the evaluator and response controls have been validated; no performance or implementation claim is made here.
+**Design · what the user sees:** When a pricing check blocks an answer, hide the rejected pricing claims and show: “We couldn’t verify the pricing details. Please check the official pricing source or request a human review.”
+
+**Leadership · risk and return:** These checks reduce the risk of clients making budgeting and vendor-selection decisions using outdated prices or unsupported purchasing conditions. A cheap deterministic check catches the known price regression, while a source-grounded judge assesses qualifications that numeric matching cannot reliably evaluate; broader detection accuracy remains unproven.
