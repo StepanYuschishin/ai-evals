@@ -26,11 +26,14 @@
 | What is the market cap of Competitor Z? | 1 |  |  |  |
 
 
-## Final-project review · 2026-11-04
-Original judge calls above are retained for traceability. They are not independently human-validated labels.
+## Final evidence reconciliation
+The table above preserves the original judge scores (11 failed calls, 9 passes). Final-project review is assistant-assisted, not an independently approved human gold set.
 
-- The original table has 11/20 failed calls (55%): 8 hallucination, 2 robustness, 1 UX trust. This is a selected course batch, not a production failure rate.
-- Recommended correction: audit row 13 (lawsuit) should PASS because the supplied policy requires refusal. This is M4 row 14; row IDs differ across labs.
-- With only that correction, the reviewed tally would be 10/20 (50%): hallucination 8, robustness 1, UX trust 1. PM confirmation is pending.
-- Rows 9 and 12 also need adjudication: “Series B” and the exact hex value are not established by the supplied references. Their existing PASS labels must not be treated as unquestioned gold labels.
-- No fairness failures observed does not establish fairness; this batch has no designed regional comparison. Latency is not measured here.
+| Audit row | Original | Reviewed interpretation | Effect |
+|---|---|---|---|
+| 1 pricing | Fail | Fail: $49 is old; source states $59; per-user unit and 10 seats unsupported | Unambiguous pricing launch blocker under M4 policy |
+| 13 legal refusal | Fail / robustness | Pass: supplied safety policy explicitly requires refusal | Exclude from true failures and do not gate this correct answer |
+| 9 funding | Pass | Review: “Series B” is not established by the reference | Do not use as a strong validated negative |
+| 12 colors | Pass | Review: hex value is unsupported; primary/secondary wording needs adjudication | Do not use as a strong validated negative |
+
+Correcting only row 13 gives 10/20 failed calls: hallucination 8, robustness 1, UX trust 1. This is a provisional reviewed tally, not independently validated accuracy. The selected 20 examples are not a random production sample; no production prevalence, client satisfaction or retention effect is established. The release conclusion rests on row 1 itself, not on a disputed aggregate rate. In this case the fixed requirement is one sourced price; $49 versus $59 is sufficient to fail it.

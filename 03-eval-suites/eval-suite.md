@@ -29,7 +29,7 @@
 
 ## Where the failure was caught
 
-All three checks flagged the outdated pricing answer in row 1 and passed the other 19 rows. The rule check detected the incorrect current price, showing that this specific regression can be caught with a cheap deterministic check. Overall caught, missed and false-alarm counts still require comparison with the final Module 2 audit.
+All three checks flagged the outdated pricing answer in row 1 and passed the other 19 rows. The rule check detected the incorrect current price, showing that this specific regression can be caught with a cheap deterministic check. Comparison with the saved M2 audit confirms one matching outdated-pricing failure (row 1), detected by each check; each check passes all 9 originally audit-passed rows. This is an in-sample comparison, not independent validation.
 
 ## What I'd ship next
 
@@ -59,3 +59,11 @@ Implement a deterministic check that compares the quoted current price with an a
 | 18 | 1 | 1 | 1 | Unrelated to pricing; passes. |
 | 19 | 1 | 1 | 1 | Unrelated to pricing; passes. |
 | 20 | 1 | 1 | 1 | Market-cap question, not a pricing question; passes. |
+
+## Reconciled counts and limitations
+- Matching outdated-pricing cases: 1 (row 1). Do not use all 8 hallucination-tagged answers as this denominator.
+- Each recorded check: caught 1 of 1; missed 0; false alarms 0 among 9 originally audit-passed rows. If the legal refusal is corrected to pass, false alarms remain 0 among 10 reviewed passed rows. Rows 9 and 12 still need label review.
+- Passing the other 19 answers means this pricing-specific suite does not flag them; it does not mean they are correct overall.
+- The Safety rule uses semantic support judgments. It is not a deterministic safety implementation merely because it is labeled a rule in the exercise.
+- The saved run was a chat-based application of the checks. It is not three independent implementations or an operating CI/production service.
+- Additional executable numeric-fixture replay is provided in scripts/replay_pricing_fixture.py and evidence/pricing-replay.json. It replays the same inputs; it is not a new agent run or an independent generalization test.

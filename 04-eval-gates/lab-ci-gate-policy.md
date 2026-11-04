@@ -2,7 +2,6 @@
 
 > Repo file `ai-evals/04-eval-gates/lab-ci-gate-policy.md`. Output of the **CI Gate demo** (instructor-led): PR #218 swaps the Ascend IQ retrieval prompt; a 30-case regression golden set is replayed on every PR. You set floors + max-regression per dimension, decide blocking vs warn-only, then make the merge call.
 >
-> Fill this with the **CI Gate Demo** tool, then **Copy markdown** and paste it over this file. The headings below mirror the tool's output exactly.
 
 | Dimension | main | PR | Δ | Floor | Max reg | Blocking | Result |
 |---|---:|---:|---:|---:|---:|---|---|
@@ -17,7 +16,7 @@
 
 ## Merge decision
 
-_e.g. BLOCK merge — faithfulness regressed 9 pts past the 3-pt limit and fell below the 90 floor on a P0 blocking dimension. Warn-only dimensions (latency, cost) don't block._
+BLOCK merge: faithfulness is 87, below floor 90, and regressed 9 points against an allowed 3. Other dimensions cannot offset this blocking failure.
 
 ## Final-project interpretation
 This is the supplied PR #218 replay scenario, not a fresh run against the learner's model. Block merge: grounding falls from 96 to 87, below the 90 floor and beyond the allowed 3-point regression. Other dimensions pass the supplied score rules. Latency and cost here are normalized scores, not milliseconds or dollars. No actual CI integration is demonstrated.

@@ -30,11 +30,7 @@ UX Trust: Measures whether users find answers clear, predictable, and consistent
 ### Trade-off 1 · Hallucination Rate ↔ Latency
 We prioritize a lower hallucination rate over lower latency because an incorrect market claim can damage a client’s strategic decisions and our relationship. We accept additional verification time and clearly acknowledge when evidence is insufficient.
 
-We prioritize a lower hallucination rate over lower latency because an incorrect market claim can damage a client’s strategic decisions and our relationship. We accept additional verification time and clearly acknowledge when evidence is insufficient.
-
 ### Trade-off 2 · Latency ↔ UX Trust
-We prioritize a lower hallucination rate over lower latency because an incorrect market claim can damage a client’s strategic decisions and our relationship. We accept additional verification time and clearly acknowledge when evidence is insufficient.
-
 We prioritize UX trust over lower latency because executives need to understand the evidence and limitations behind an answer. We accept additional response time to provide clear sources and uncertainty rather than encourage unsupported confidence.
 
 ---

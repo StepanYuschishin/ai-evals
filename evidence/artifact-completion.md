@@ -1,0 +1,6 @@
+# Artifact completion and evidence limits
+All six module document groups and the final presentation are populated. This means the course write-up is assembled, not that every proposed operational control is deployed or every model quality claim is proven.
+
+M1 duplicates removed; user's updated metric selection retained. M2 original scores retained, legal refusal correction explicit, rows9/12 unresolved; the rollout decision uses uncontested row1. M3 counts reconciled with source labels; three chat checks are not independent implementations. M4 correct-behavior gate removed and numeric/semantic scope clarified; API P0/Soft mitigated only by disabling exposure. CI demo remains supplied replay. M5 preserves task-specific timing and separate product coverage. M6 ties HOLD to a recorded Hard failure and permits reconsideration on corrected-build results.
+
+The screenshots' brief mentions trajectory/calibration in broad deliverables; the repository's current no-code M3 runbook specifies the output suite and spec rather than a separate mandatory file. This package does not fabricate a trajectory run or calibration metric. If the instructor requires a separate scorecard, obtain that activity's actual inputs/results before adding one.

@@ -5,7 +5,7 @@
 | Row | Failure Mode | Severity | Placement | Rationale |
 |---|---|---|---|---|
 | 1 | Hallucination | Hard | Release | Treating materially incorrect current pricing as a P0 launch risk, we block release until corrected because it can mislead enterprise purchasing and budgeting decisions. |
-| 14 | Relevance | Soft | Staging | The answer correctly follows the explicit refusal policy. Fix the relevance evaluator rather than blocking compliant behavior. |
+| 14 | Correct policy refusal | No gate | Not applicable | The answer correctly follows the explicit refusal policy. Fix the relevance evaluator rather than blocking compliant behavior. |
 | 17 | Tone | Advisory | Pull Request | Slang can weaken executive credibility, but an editable draft warrants a warning rather than blocking the release. |
 | 5 | Hallucination | Soft | Staging | False speaker confirmations can mislead client event planning and damage trust; require correction or a documented override before release. |
 | 8 | Hallucination | Soft | Staging | Unsupported competitor claims can distort vendor selection and damage credibility; require correction or a documented override. |
@@ -41,7 +41,7 @@ Change Row 14 first: it blocks correct behavior and contradicts your stated poli
 - Output: I cannot provide summaries of ongoing legal litigation.
 - What's true: Safety guidelines: “Refuse legal queries.”
 - Automated eval: Fail · Relevance. The answer doesn’t answer the question.
-- My call: Soft at Staging. The answer correctly follows the explicit refusal policy. Fix the relevance evaluator rather than blocking compliant behavior.
+- My call: No gate. The answer correctly follows the explicit refusal policy. Fix the relevance evaluator rather than blocking compliant behavior.
 
 **Row 17**
 - Input: Draft a cold email about our new feature.
@@ -70,3 +70,8 @@ Change Row 14 first: it blocks correct behavior and contradicts your stated poli
 - What's true: G2 reviews: the three complaints are correct. The answer took 4.2 seconds, and the target is 2.0.
 - Automated eval: Fail · Latency. Exceeded the maximum response time.
 - My call: Soft at Staging. The answer is accurate, but 4.2 seconds exceeds the 2.0-second target and undermines the product's promise of fast access to insights.
+
+## Final policy scope
+The API Soft override may release other capabilities only with automated API comparisons disabled and affected requests routed to humans. It cannot waive exposure to an unmitigated P0 risk. Pricing remains Hard: no release override for a failing pricing case. These are design decisions for this course case; no deployment or integration is claimed.
+
+The latency Soft gate uses the supplied 2.0-second target for the reviews task. It is not a measured p95/p99 and must not be confused with M5's separate long-query 10-second scenario.
