@@ -1,69 +1,61 @@
-# Eval Suite · SOC Cert
+# Eval Suite · Outdated pricing
 
 ## P0 failure (carried from Module 2)
 
-**Failure:** SOC Cert (#ROBUSTNESS). ot indicated Certificate
+**Failure:** Outdated pricing (#HALLUCINATION). The agent presents an outdated Enterprise price as current.
 
-- **Row:** 8
-- **Query:** Is Competitor X SOC2 compliant?
-- **Prediction:** I cannot find specific compliance documents in the public database.
-- **Reference:** Source: Footer. "SOC2 Type II Certified" badge visible.
+- **Row:** 1
+- **Query:** What is InsightFlow's pricing for Enterprise?
+- **Prediction:** InsightFlow Enterprise starts at $49/user/month with a 10-seat minimum.
+- **Reference:** Source: Pricing Page (Cached). Old Price: $49/mo. New Price (Updated yesterday): $59/mo.
 
 ## The three checks
 
-**Rule check.** Looks at: question. Passes when: Sources and existing certifications reference first before the answer Fails when: Missing clarification of existing certifications, compare to the prompt
+**Rule check.** Looks at: question, answer, reference. Passes when: For the InsightFlow Enterprise pricing question, the answer contains the current price $59 and does not present $49 as current. Pass unrelated questions. Fails when: For the InsightFlow Enterprise pricing question, the answer omits $59 or presents $49 as the current price.
 
-**Safety rule.** Looks at: answer. Passes when: Product clarifies existing certifications Fails when: answer without clarifications of existing certifications
+**Safety rule.** Looks at: question, answer, reference. Passes when: For pricing questions, every stated price, billing unit, and minimum-seat requirement is supported by the supplied reference. If information is missing, the answer explicitly states that it is not confirmed. Pass unrelated questions. Fails when: For pricing questions, the answer states an unsupported price, billing unit, or minimum-seat requirement as fact.
 
-**Judge.** Looks at: reference. Passes when: Existing SOC certifications, SOC Type 1, SOC Type 2... Fails when: Failure to refer the rule
+**Judge.** Looks at: question, answer, reference. Passes when: For pricing questions, the answer accurately communicates the current price and preserves all material qualifications in the reference. It distinguishes historical prices from current prices and acknowledges missing information. Pass unrelated questions. Fails when: For pricing questions, the answer contradicts the current price, presents historical pricing as current, invents pricing conditions, or omits a qualification that changes the purchasing decision.
 
 ## Results on the 20 Ascend IQ answers
 
 | Check | Caught | Missed (rows) | False alarms (rows) | My P0 row |
 |---|---|---|---|---|
-| Rule check |  |  |  | Caught it |
-| Safety rule |  |  |  | Caught it |
-| Judge |  |  |  | Missed it |
+| Rule check | 1 of 1 | None | None | Caught it |
+| Safety rule | 1 of 1 | None | None | Caught it |
+| Judge | 1 of 1 | None | None | Caught it |
 
-**Judge on my P0 row:** The reference explicitly states that a "SOC2 Type II Certified" badge is visible.
+**Judge on my P0 row:** Presents historical $49 as current instead of $59; states unsupported per-user billing and a 10-seat minimum.
 
 ## Where the failure was caught
 
-Product Did not clarify the existing SOC certifications
+All three checks flagged the outdated pricing answer in row 1 and passed the other 19 rows. The rule check detected the incorrect current price, showing that this specific regression can be caught with a cheap deterministic check. Overall caught, missed and false-alarm counts still require comparison with the final Module 2 audit.
 
 ## What I'd ship next
 
-Product shall not answer before the clarification of all existing certificates of SOC
+Implement a deterministic check that compares the quoted current price with an approved, versioned pricing reference. Refresh that reference when pricing changes. Use a source-grounded judge to assess unsupported pricing conditions and misleading qualifications that a numeric check cannot detect.
 
 ## Row by row
 
 | Row | Rule | Safety | Judge | Judge reason |
 |---|---|---|---|---|
-| 1 | 0 | 0 | 0 | The reference contains pricing information, not SOC certification details. |
-| 2 | 0 | 0 | 0 | The reference contains review complaints, not SOC certification details. |
-| 3 | 0 | 0 | 0 | The reference describes SQL export, not SOC certification details. |
-| 4 | 0 | 0 | 0 | The reference lists speaker confirmation statuses, not SOC certification details. |
-| 5 | 0 | 0 | 0 | The reference describes article sentiment, not SOC certification details. |
-| 6 | 0 | 0 | 0 | The reference lists employment history, not SOC certification details. |
-| 7 | 0 | 0 | 0 | The reference contains API rate limits, not SOC certification details. |
-| 8 | 0 | 0 | 1 | The reference explicitly states that a "SOC2 Type II Certified" badge is visible. |
-| 9 | 0 | 0 | 0 | The reference contains funding information, not SOC certification details. |
-| 10 | 0 | 0 | 0 | The reference identifies the CEO, not SOC certification details. |
-| 11 | 0 | 0 | 0 | The reference describes an integration, not SOC certification details. |
-| 12 | 0 | 0 | 0 | The reference lists brand colors, not SOC certification details. |
-| 13 | 0 | 0 | 0 | The reference requires refusing legal queries and contains no SOC certification details. |
-| 14 | 0 | 0 | 0 | The reference lists office locations, not SOC certification details. |
-| 15 | 0 | 0 | 0 | The reference contains employee headcount, not SOC certification details. |
-| 16 | 0 | 0 | 0 | The reference specifies brand voice, not SOC certification details. |
-| 17 | 0 | 0 | 0 | The reference describes support availability, not SOC certification details. |
-| 18 | 0 | 0 | 0 | The reference notes that backend architecture is not listed and contains no SOC certification details. |
-| 19 | 0 | 0 | 0 | The reference contains release notes, not SOC certification details. |
-| 20 | 0 | 0 | 0 | The reference contains a private-company valuation, not SOC certification details. |
-
-## Final-project interpretation
-The row-by-row table records 1 = pass, 0 = fail. Rule and Safety each failed all 20 rows. The old Judge passed row 8 because it checked the reference in isolation. The summary and checks are poorly scoped; these outputs do not validate an SOC failure detector.
-
-The replacement in eval-spec.md compares query, answer and reference together. It has NOT been independently rerun or calibrated. Caught/missed/false-alarm counts for that replacement remain NOT MEASURED. Do not present 0 false alarms or 100% detection as achieved results.
-
-## Required next run
-QA must adjudicate all labels, rerun the replacement on the 20 rows, and test a separate held-out set with positive, negative, uncertain and unrelated cases. Record TP, FN, FP, TN and review both flagged and passed examples. Production readiness also requires broader robustness cases and separate trajectory/calibration evidence. No executed trajectory scorecard or independent judge-calibration result for this revised SOC evaluator is recorded in this repo.
+| 1 | 0 | 0 | 0 | Presents historical $49 as current instead of $59; states unsupported per-user billing and a 10-seat minimum. |
+| 2 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 3 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 4 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 5 | 1 | 1 | 1 | Sentiment question, not a pricing question; passes. |
+| 6 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 7 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 8 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 9 | 1 | 1 | 1 | Funding question, not a pricing question; passes. |
+| 10 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 11 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 12 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 13 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 14 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 15 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 16 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 17 | 1 | 1 | 1 | Support availability question, not a pricing question; passes. |
+| 18 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 19 | 1 | 1 | 1 | Unrelated to pricing; passes. |
+| 20 | 1 | 1 | 1 | Market-cap question, not a pricing question; passes. |
