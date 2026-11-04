@@ -1,23 +1,41 @@
-# AI Evaluation Strategy Canvas · Ascend IQ
+# AI Evaluation Strategy Canvas
 
-Status: final-project recommendation reconstructed from the course scenario and M2–M5 artifacts; PM approval pending. Proposed controls are not implemented controls.
+> Repo file `ai-evals/01-evaluation-strategy/strategy-canvas.md` (the repo is your submission).
 
 ## 1. Product Strategy, The Context
-- Target user: VP-level strategists and product leaders at enterprise clients.
-- Key use case: answer market-intelligence questions using verified research, product documentation and reviews.
-- Value proposition: reduce time spent finding decision-relevant information while protecting trust in a premium intelligence service.
+
+**Who it's for:** VP-level strategists and product leaders at Fortune 500 companies who pay upward of $50,000 a year for verified market intelligence.
+
+**What they use it for:** Asking plain-language questions, like “Compare the pricing models of Stripe and Adyen,” and getting answers in seconds instead of digging through the platform.
+
+**What's at stake:** Engagement is dropping, Q4 retention is at risk, and the CPO wants Ascend IQ live for the top 50 enterprise accounts next month. One poor answer to the wrong client can do lasting damage to the relationship.
 
 ## 2. Measurements, The Execution
-User promise: Ascend IQ gives enterprise decision-makers relevant, source-supported answers quickly, preserving uncertainty and material qualifications.
 
-| Top trust metric | Measurement | Evidence boundary |
-|---|---|---|
-| Hallucination / factual grounding | Unsupported, contradicted or outdated material claims divided by reviewed answers | M2 is a selected 20-answer audit, not a production-rate estimate |
-| Robustness / task completion | Applicable requests completed without critical omissions or unjustified refusal | SOC row 8 is one known failure, not general robustness coverage |
-| UX trust | Answers with unsupported certainty or prohibited tone divided by reviewed answers | Tone needs context-sensitive review in addition to simple slang rules |
+**User promise.** For VP-level strategists and product leaders at Fortune 500 companies, Ascend IQ promises market intelligence in seconds, supported by verifiable sources and clear uncertainty, so that they can make informed strategic decisions with confidence.
 
-Why these three: incorrect facts, failed requests and misplaced confidence undermine vendor decisions and enterprise retention. Monitor latency separately; text-only audits cannot measure it.
+**Top 3 trust metrics:**
+- **Latency**, Response speed (P95 / P99). Slow kills engagement.
+- **Hallucination Rate**, % of outputs that are confidently false or fabricated.
+- **UX Trust**, Whether the experience feels consistent and trustworthy. It breaks when the tone undermines the user's confidence.
 
-## 3. Strategic Trade-Offs
-- Prioritize source support and task completion over speed when a faster answer would mislead a client. Use explicit uncertainty or human escalation when evidence is insufficient.
-- Fund continuous fabrication and context checks first; temporarily use weekly tone and regional-quality audits. This accepts detection delay, not absence of risk. Review after two weeks of operation.
+**Why these three:** Latency: Measures whether complete answers arrive quickly enough to fit busy executives’ workflows and support the promise of intelligence in seconds.
+
+Hallucination Rate: Measures false or fabricated claims that could mislead strategic decisions and damage valuable enterprise relationships.
+
+UX Trust: Measures whether users find answers clear, predictable, and consistent, helping confirm that sources and uncertainty support informed confidence.
+
+## 3. Strategic Trade-Offs, The Cost
+
+### Trade-off 1 · Hallucination Rate ↔ Latency
+We prioritize a lower hallucination rate over lower latency because an incorrect market claim can damage a client’s strategic decisions and our relationship. We accept additional verification time and clearly acknowledge when evidence is insufficient.
+
+We prioritize a lower hallucination rate over lower latency because an incorrect market claim can damage a client’s strategic decisions and our relationship. We accept additional verification time and clearly acknowledge when evidence is insufficient.
+
+### Trade-off 2 · Latency ↔ UX Trust
+We prioritize a lower hallucination rate over lower latency because an incorrect market claim can damage a client’s strategic decisions and our relationship. We accept additional verification time and clearly acknowledge when evidence is insufficient.
+
+We prioritize UX trust over lower latency because executives need to understand the evidence and limitations behind an answer. We accept additional response time to provide clear sources and uncertainty rather than encourage unsupported confidence.
+
+---
+_Generated from the AI Evaluation Strategy Canvas, M1 lab tool, AI Evals Certification._
