@@ -1,12 +1,16 @@
-# Навіщо кожен слайд
+# П’ять слайдів: задача → докази → варіанти → controls/бюджет → рішення
 
-| Слайд | Внесок у рішення про 50 акаунтів |
-|---|---|
-| 1. Should Ascend IQ launch to 50 enterprise accounts? | DECISION REQUIRED: approve or hold this rollout. Success means fast, source-supported answers—not speed alone. |
-| 2. The supplied answers contain decision-relevant failures | HOLD EVIDENCE: pricing is wrong and the speed target is missed. The correct legal refusal supports compliance; it does not cancel the failures. |
-| 3. The pricing evaluator detects the known failure | SUPPORTS SHIP READINESS OF THE CHECK: the known example is detectable. It does NOT justify shipping the agent: the flagged answer is still wrong. |
-| 4. One failed Hard gate blocks the proposed release | HOLD: pricing fails a non-overridable Hard gate. Soft exceptions and Advisory warnings cannot compensate for it. |
-| 5. The proposed monitoring allocation is affordable | SUPPORTS SHIP ON COST: the planned online allocation fits the cap. It does not establish quality or override the failed pricing gate. |
-| 6. Final recommendation: HOLD this broad rollout | HOLD TODAY ON THE SUPPLIED EVIDENCE—not by majority vote. A corrected build passing the agreed gates can change the decision; that result is not yet recorded. |
+1. **Decide whether to launch to 50 enterprise accounts**
+Recommendation: HOLD the unrestricted 50-account rollout; assess a narrower pilot against explicit entry criteria.
 
-Портфельний приклад AI Report Summaries і окремий CI demo вилучені з основних слайдів: вони лишаються у повному пакеті джерел для запитань.
+2. **The labs expose risks—and a way to detect one**
+Decision implication: investigate and contain these risks before broad rollout. These examples do not establish a production failure rate.
+
+3. **A pricing failure does not automatically require a total shutdown**
+Decision: HOLD the proposed broad rollout. A restricted pilot needs its own approval; the current evidence does not yet justify starting it.
+
+4. **Keep checks proportional to the risk and cost**
+Supports a feasible control plan—not launch readiness. Confirm implementation and staffing before relying on these protections.
+
+5. **HOLD broad rollout; return with a testable pilot proposal**
+What changes HOLD: passing results and working controls for an explicitly approved scope—not a relabeled old error or a written plan alone.

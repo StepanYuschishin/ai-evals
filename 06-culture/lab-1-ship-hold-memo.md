@@ -1,40 +1,36 @@
 # Ship-or-Hold Memo · Ascend IQ
 
-**HOLD the proposed broad rollout to 50 enterprise accounts on the supplied course evidence: the known pricing answer fails the chosen Hard release criterion.**
+**HOLD the unrestricted 50-account rollout; qualify a restricted pilot as the next option, subject to separate entry criteria and approval.**
 
-To: CPO, Engineering Lead, QA · From: Stepan Yuschishin · 2026-11-04
-Scope: final-project recommendation about the evaluated course build/batch, not a claim about an unseen newer build or an actual deployment decision.
+To: CPO, Engineering Lead, QA · From: Stepan Yuschishin · Course final-project recommendation
 
 ## The Answer
-Do not approve the broad rollout on the current evidence. The saved answer quotes $49 while the source says $59. Our agreed pricing Hard gate requires zero failing applicable cases. M3 detects this answer; it does not demonstrate that the product has been fixed. Request the corrected answer and rerun before revisiting launch.
+The supplied examples expose pricing, comparison and speed defects. They do not establish that every capability is unsafe or reveal production recurrence. Broad rollout is not supported by the current evidence, but a total product shutdown is not established either. Investigate causes, fix or exclude affected capabilities, validate the remaining scope and return for a pilot decision.
 
-## The Arguments
-### 1. The current pricing example fails our explicit quality bar
-M2 row 1 is an unambiguous source contradiction. M4 assigns pricing Hard at Release. Zero bad applicable pricing answers is the proposed bar; one is recorded. No disputed overall failure rate is needed to reach this conclusion.
-### 2. Speed is central to the product promise, and the supplied task misses its target
-M1 prioritizes Latency, Hallucination Rate and UX Trust. The M4 review-summary case takes 4.2 seconds against 2.0 seconds: FAIL for that task. This is one sample, not p95/p99. Soft means a documented restricted exception is possible; it cannot override the pricing Hard failure.
-### 3. Detection and budget are now designed, but are not evidence of a successful fix
-The M3 pricing suite records 1 of 1 known pricing cases caught by each check, zero misses and zero false alarms among 9 originally audit-passed examples. This is narrow in-sample detection evidence. M5 allocates $155,000 online and $168,250 including fallback audits/checks, within its stated online cap. Neither establishes that a corrected build passes.
+## Three Arguments
+1. **Decision quality is at risk.** The pricing answer states $49 versus a $59 reference and includes unsupported conditions. The API answer supplies unsupported framing instead of the source-supported comparison. These are specific observed defects, not estimated production rates.
+2. **The speed promise needs evidence.** One review-summary example takes 4.2 seconds versus a 2.0-second target. This is a task-level failure, not p95/p99 or measured retention impact. The M1 promise includes speed as well as grounding and UX trust.
+3. **Protection is designed, not yet demonstrated at rollout scope.** M3 recorded checks detect the one known pricing failure; this does not show a corrected agent or general detection accuracy. The $155,000 online plan is affordable under the $200,000 online cap; implementation and staffing remain to be demonstrated before relying on it.
 
-## Evidence · Results versus criteria
-| Metric / case | Result | Bar | Outcome | Source |
-|---|---|---|---|---|
-| Current pricing, course answer | $49 quoted; $59 reference; 1 failing applicable answer | 0 failures | FAIL / Hard | M2 row 1, M3 row 1, M4 launch strategy; deterministic replay in evidence/pricing-replay.json |
-| Pricing detector on known matching case | Each of three recorded chat checks catches 1 of 1; misses 0; false alarms 0 among 9 original audit-passed cases | Catch known case, zero matching misses/false alarms | PASS for this sample only | M3 suite; M2 original labels |
-| Review-summary response time | 4.2 seconds, one supplied observation | <=2.0 seconds for this task | FAIL / Soft | M4 row 3 |
-| API answer | Omits verified limits, adds unsupported competitor framing | 0% material contradictions / unsupported competitor claims in applicable cases | FAIL on supplied example / Soft with restricted-scope mitigation | M2 row 7; M4 row 8 |
-| Cold-email slang | “killer”, “total game changer” present | 0 prohibited slang matches | WARN / Advisory | M4 row 17 |
-| Legal refusal | Follows explicit refusal policy | Follow policy | PASS / No gate | M2 row 13; M4 row 14 |
-| Supplied PR #218 grounding | 87; main 96; regression 9 points | floor 90; max regression 3 | FAIL / BLOCK this demo PR | M4 CI policy, separate 30-case supplied scenario |
-| Online allocation | $155,000; 2 online evals | <=$200,000; at most 3 | PASS / plan | M5 budget |
+## Evidence versus chosen criteria
+| Evidence | Result | Criterion | Meaning |
+|---|---|---|---|
+| Pricing, M2/M3 row1 | $49 vs current $59; 1 bad applicable answer | M4 candidate including pricing: 0 material pricing failures | Fails that candidate's chosen Hard gate; root cause/recurrence unknown |
+| API, M2 row7 / M4 row8 | Unsupported framing; source 500 vs 1,000 req/min | Supported relevant comparison; M4 Soft policy | Fix or exclude automated comparisons with validated routing |
+| Speed, M4 row3 | 4.2 seconds | 2.0-second task target | Soft failure for that task; more timing evidence needed |
+| Pricing detector, M3 | Each of three recorded checks flags 1 of 1 known cases; 0 misses | Detect known example | In-sample detection success, not a corrected-output pass |
+| Budget, M5 | $155,000 online; 2 online evals; total $168,250 | <=$200,000 online; max3 | Feasible planned allocation, not operational readiness |
 
-## Business Risk
-The brief identifies declining engagement, Q4 retention pressure and slow access to insights. Fifty accounts at upwards of $50,000 annually imply more than $2.5 million in annual account value, not forecast loss. Incorrect prices can mislead purchasing decisions; delay risks postponing the retention benefit. We have no measured churn impact or client satisfaction study, so neither loss nor benefit is invented.
+## Policy interpretation
+The earlier pricing Hard rule is a PM policy for a release that includes automated pricing, not evidence that every feature must stop. A restricted candidate excluding affected features is a different scope. It requires demonstrated exclusions, QA evidence for remaining tasks and explicitly approved scope-specific gates. It cannot simply waive the failed Hard criterion. Pilot readiness is not established today.
 
-## Next Step · Decision Needed
-At today's presentation, approve HOLD on broad rollout and assign Engineering the pricing/source fix, QA the replay and label reconciliation, PM the acceptance and scope decision, and the pricing-data owner reference freshness. Request an owner-agreed rerun date before ending the review; no delivery date is asserted as committed.
+## Business trade-off
+Holding broad access delays the hoped-for engagement/retention benefit. Launching untested decision-support answers exposes clients to incorrect purchasing information. The brief's 50 accounts paying upwards of $50,000 imply more than $2.5m annual account value; that is neither expected loss nor revenue attributable to Ascend IQ. No causal churn estimate is available.
 
-Exit criteria: pricing passes the 0-failure Hard bar on applicable current-reference cases, including the corrected row 1 and unsupported-term checks; evaluator counts are reconciled; other Soft failures are fixed or have documented scope/risk mitigation; all Hard gates pass. Add representative timing evidence before claiming p95/p99 performance. A limited pilot is a separate approval with defined stop rules and retained protections, not an automatic substitute for failed gates.
+## Ask and next evidence
+At today's review, approve HOLD on the unrestricted scope, assign owners and agree a dated follow-up before the meeting ends. Engineering/pricing-data owner diagnose stale source versus retrieval versus generation and fix or exclude affected functionality. QA retests corrected and representative in-scope tasks. PM/Engineering define pilot scope, stop rules and demonstrate routing/rollback. CPO approves a pilot only after its entry criteria pass. No pilot account count or committed delivery date is invented.
 
 ## Reflection
-The key distinction is between a check catching an error and the agent no longer making that error. Our successful pricing detection supports a control choice; it does not turn a bad answer into a good one. Likewise, a policy-compliant refusal should not be treated as a failure, and a small targeted batch should not be described as production accuracy.
+An observed failure justifies investigation and a containment decision; its scope must not be assumed. A successful detector does not fix a product answer. A written gate does not prove its own severity or implementation. The management decision is about exposure, evidence and scope—not counting negative slides.
+
+Sources: M1 strategy-canvas.md; M2 audit-log.md and failure-taxonomy.md; M3 eval-suite.md/eval-spec.md; M4 gate-map.md/launch-strategy.md; M5 lab-2-budget-crisis.md. Full reasoning: evidence/managerial-decision.md.

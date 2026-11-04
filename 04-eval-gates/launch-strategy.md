@@ -1,3 +1,5 @@
+> **Final management interpretation:** See [managerial decision](../evidence/managerial-decision.md). The pricing Hard rule applies to a candidate including pricing. It does not automatically require stopping every isolated capability. A restricted scope requires separate approved criteria and demonstrated controls; no pilot is approved by this document. Earlier unconditional whole-product HOLD wording is superseded.
+
 # Module 4 · Launch Strategy · Ascend IQ Copilot
 
 ## 4.0 Release Criteria

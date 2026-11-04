@@ -1,9 +1,9 @@
 # Ascend IQ · Final AI Evals Project
 
-**Recommendation: HOLD broad rollout on the supplied course evidence.** Row 1 quotes $49 against a current $59 reference and fails the chosen zero-failure pricing Hard gate. The successful detector result is not evidence that the answer was fixed.
+**Recommendation: HOLD unrestricted access for the 50 accounts; qualify a restricted pilot for a separate approval.** Specific defects are observed; production recurrence and readiness of unaffected scope are not established. See [full managerial reasoning](evidence/managerial-decision.md).
 
 ## Presentation and preparation
-The main presentation has 6 slides. Each ends with its explicit impact on the 50-account SHIP/HOLD decision. Full lab details remain in the presenter edition and evidence bundle.
+The main presentation has 5 slides. Each ends with its explicit impact on the 50-account SHIP/HOLD decision. Full lab details remain in the presenter edition and evidence bundle.
 
 - [Audience slides](final-presentation.html)
 - [Presenter slides with full evidence and Ukrainian notes](presenter-with-evidence.html)

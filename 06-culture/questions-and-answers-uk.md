@@ -1,31 +1,23 @@
-# Підготовка до запитань
+# Відповіді на запитання
 
-**Чому HOLD?** У перевіреній відповіді ціна $49, а source $59. Ми задали Hard bar 0 неправильних pricing-відповідей. Є 1 failure; виправлений прогін відсутній. Це висновок про надану версію/вибірку.
+**Чому HOLD, якщо лише одна неправильна ціна?** HOLD стосується необмеженого rollout на поточних evidence. Помилка підтверджена, але recurrence/root cause невідомі. Не робимо висновку, що всі функції unsafe; оцінюємо restricted alternative після тестів і controls.
 
-**А якщо нова версія вже все виправила?** Покажіть її відповіді та результати тих самих критеріїв. Тоді переглянемо рішення; не переносимо старі failures на невідому нову версію.
+**Чи можна просто вимкнути pricing?** Це варіант, не доведена можливість. Треба показати, що boundary працює, affected requests коректно routed, інші задачі пройшли criteria і PM/CPO погодили новий scope.
 
-**Чому detector PASS, а запуск HOLD?** Detector виконав свою задачу — спіймав неправильну відповідь. Product answer усе ще FAIL. Це різні об’єкти оцінювання.
+**Чому не запускаємо pilot зараз?** Немає результатів proposed in-scope tasks і доказу потрібних exclusions/rollback. Ми просимо підготувати pilot proposal, а не підписуємо його автоматично.
 
-**Це 100% detection?** Тільки 1 із 1 на цьому in-sample case. Одного positive і переважно unrelated прикладів недостатньо для загальної якості або recall.
+**Що доводять три M3 checks?** Кожна flag known pricingrow1. Це detection цього прикладу; не corrected-agent pass, не general recall і не три незалежні production implementations.
 
-**Звідки counts?** M3 показує 0 на row1 і 1 на решті 19. M2 row1 failed, отже caught 1/1. Всі 9 original audit-passed rows пройшли pricing check, отже false alarms 0/9. Це не означає, що решта 19 правильні загалом.
+**Що таке production accuracy estimate?** Частка правильних відповідей на репрезентативному реальному потоці. Наші 20 навчальних кейсів не дають такої оцінки.
 
-**Чому ціна — P0?** Це обрана PM release policy для materially wrong pricing у decision-support продукті. Курсова матриця дає високий пріоритет через high-impact і high tag frequency. Та tag frequency не є production prevalence й не доводить, що кожна похибка ціни — катастрофа.
+**Чому legal PASS?** Reference каже Refuse legal queries; агент відмовив. Початковий judge помилився. Це урок про evaluator, не launch blocker.
 
-**Чому API P0 в taxonomy, але Soft?** Запускати незахищений P0 через підписаний waiver не можна. За планом override лише дозволяє інші features після вимкнення API comparison та human routing. Якщо таке обмеження недоступне — виправляємо або тримаємо запуск.
+**Що з Hard gate?** Погоджений у лабі pricing Hard діє для candidate з automated pricing. Нова restricted scope потребує окремих criteria й demonstrable isolation; це не waiver failedHard.
 
-**Чому latency не головний blocker?** Вона центральна для promise. Але accurate answer за 4.2s — Soft проти 2.0s; wrong price — Hard. Швидкість не компенсує матеріальну помилку.
+**Що з latency?** Один M4 task 4.2s проти2.0s. Це miss tasktarget, не p95/p99. M5 longqueries10s — інший taskclass. Speed є ключовою businesspromise.
 
-**2 чи 10 секунд?** 2.0s — конкретний review-summary task M4. >10s — long multi-step query failure M5. Це різні task classes; вони не задають єдиний production SLA.
+**Що з budget?** 85k fabrication +70kcontext=155konline; із6500tone+5500bias+1250timer=168250total. Onlinecap200k. Це planningcosts, не operatingcoverage.
 
-**Чи fairness перевірена?** Ні. Відсутність fairness flags у 20 загальних кейсах не є fairness audit. M5 бюджет передбачає 25US/25APAC із matched cases і спільною rubric щотижня.
+**Що доводить $2.5m?** Лише accountvalue context:50×понад50k/рік. Не forecastloss, agentrevenue чи retentionuplift.
 
-**Що означає $2.5m?** 50 акаунтів × мінімальний орієнтир $50k/рік. Це account-value context, не очікуваний збиток, не дохід агента і не retention uplift.
-
-**Чому $155k, а не весь cap?** Повні tiers fabrication85 + context70 + tone65 дали б $220k online, вище $200k. Не витрачаю headroom без обґрунтованого варіанта. Total із fallback = $168,250.
-
-**Чи checks вже в production?** Ні. Є chat evaluation, executable narrow fixture replay та дизайн controls. Не заявляю реалізований pipeline, feature flags, staffed audit чи rollout.
-
-**Навіщо AI Report Summaries?** Це окрема portfolio-лаба M5, appendix для демонстрації coverage prioritization. Вона не є даними про Ascend IQ.
-
-**Який один наступний крок?** Engineering виправляє source/current pricing; QA проганяє corrected output через agreed criteria. Після цього повертаємось до rollout-рішення.
+**Що змінить рішення?** Evidence виправлених відповідей і representative in-scope tasks, працюючі controls, погоджені scope/stoprules та CPO/PMapproval.

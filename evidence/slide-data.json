@@ -1,237 +1,134 @@
 [
   {
-    "title": "Should Ascend IQ launch to 50 enterprise accounts?",
-    "label": "01 · Final Project task · Business brief + M1",
+    "title": "Decide whether to launch to 50 enterprise accounts",
+    "label": "01 · The assignment",
     "points": [
-      "Product: an AI agent that finds and explains verified market intelligence inside Ascend Analytics.",
-      "Problem: clients spend too long finding insights; engagement and Q4 retention are at risk.",
-      "Proposal: access for 50 accounts paying upwards of $50,000 annually. Decide SHIP or HOLD using the lab evidence."
+      "Ascend IQ should turn slow research into fast, source-supported answers.",
+      "50 accounts paying upwards of $50,000/year; engagement and retention are at risk.",
+      "Decision: SHIP the proposed rollout or HOLD it—and define what happens next."
     ],
-    "impact": "DECISION REQUIRED: approve or hold this rollout. Success means fast, source-supported answers—not speed alone.",
+    "impact": "Recommendation: HOLD the unrestricted 50-account rollout; assess a narrower pilot against explicit entry criteria.",
     "sources": [
       "evidence/business-brief.md",
       "01-evaluation-strategy/strategy-canvas.md"
     ],
-    "notes": "Це саме завдання, а не ще один лабораторний exercise. Спочатку пояснюємо продукт і business problem. Далі перевіряємо готовність за labs. Понад $2.5m account value — контекст, не прогноз втрат. Твої метрики: latency, hallucination, UX trust.",
+    "notes": "Завдання — вирішити readiness broad rollout, не переказати курс. HOLD означає не схвалити необмежений запуск на наявних даних. Це не заборона всіх експериментів. Понад $2.5m account value не дорівнює forecast loss.",
+    "headers": [],
     "rows": []
   },
   {
-    "title": "The supplied answers contain decision-relevant failures",
-    "label": "02 · Agent output evidence · M2 audit + M4 task observations",
-    "points": [
-      "These are supplied course examples, not a production accuracy estimate.",
-      "The source supports each finding below; the overall 20-row audit has disputed labels, so we do not use its aggregate as the launch verdict."
+    "title": "The labs expose risks—and a way to detect one",
+    "label": "02 · Evidence → what it establishes",
+    "points": [],
+    "headers": [
+      "Evidence",
+      "What it establishes"
     ],
     "rows": [
       [
-        "Pricing · M2 row 1",
-        "$49 quoted; current reference $59",
-        "Match current source",
-        "FAIL"
+        "Pricing: $49 stated; reference $59 · M2",
+        "A real source mismatch in this answer; recurrence and root cause unknown."
       ],
       [
-        "API · M2 row 7 / M4 row 8",
-        "Unsupported framing; reference 500 vs 1,000 req/min",
-        "Supported, relevant comparison",
-        "FAIL"
+        "API: unsupported framing; source 500 vs 1,000 req/min · M2/M4",
+        "This comparison is misleading; numeric matching alone will miss its wording."
       ],
       [
-        "Speed · M4 row 3",
-        "4.2 seconds",
-        "2.0-second task target",
-        "FAIL"
+        "Review summary: 4.2s vs 2.0s target · M4",
+        "One task misses its speed target; no p95/p99 or retention effect established."
       ],
       [
-        "Legal refusal · M2 row 13",
-        "Refuses as policy requires",
-        "Follow refusal policy",
-        "PASS"
+        "Three pricing checks flag row 1 · M3",
+        "The known error is detectable—not fixed. Most other cases are unrelated."
       ]
     ],
-    "impact": "HOLD EVIDENCE: pricing is wrong and the speed target is missed. The correct legal refusal supports compliance; it does not cancel the failures.",
+    "impact": "Decision implication: investigate and contain these risks before broad rollout. These examples do not establish a production failure rate.",
     "sources": [
       "02-failure-discovery/audit-log.md",
+      "03-eval-suites/eval-suite.md",
       "04-eval-gates/gate-map.md"
     ],
-    "notes": "Це результати агента, не evaluator. Для speed reference — заданий M4 task, а не M2 timing dataset. API не містить чисел у відповіді, тому просте numeric rule не перевіряє всю проблему. Початковий judge помилково покарав правильну відмову.",
-    "table_headers": [
-      "Check / source",
-      "Recorded result",
-      "Expected",
-      "Status"
-    ]
+    "notes": "Це фактичні відповіді та результати з лаб. Ніякого 50% production accuracy. Три chat checks дали fail pricingrow1; це один known positive, не три незалежні implementation. Відома pricing-помилка потребує rootcause й нового output. Legal refusal не окремий launch аргумент: він в appendix показує evaluator falsealarm."
   },
   {
-    "title": "The pricing evaluator detects the known failure",
-    "label": "03 · Evaluator evidence · M3 output suite",
-    "points": [
-      "All three recorded checks flag the same outdated-pricing row and pass the other 19 rows. Those 19 are mostly outside this check’s scope.",
-      "A separate numeric-fixture replay also flags $49 vs $59 on the same frozen inputs. This is not a corrected-agent run."
+    "title": "A pricing failure does not automatically require a total shutdown",
+    "label": "03 · Management options",
+    "points": [],
+    "headers": [
+      "Option",
+      "Assessment"
     ],
     "rows": [
       [
-        "Rule check",
-        "1 of 1 caught; 0 misses",
-        "0 among 9 original audit-passed rows",
-        "PASS on sample"
+        "Launch all capabilities to all 50 accounts now",
+        "Not supported: known defects and no corrected-build results against agreed criteria."
       ],
       [
-        "Safety rule",
-        "1 of 1 caught; 0 misses",
-        "0 among 9 original audit-passed rows",
-        "PASS on sample"
+        "Hold every capability until all risks disappear",
+        "Too broad: we have not established that every capability is unsafe."
       ],
       [
-        "LLM judge",
-        "1 of 1 caught; 0 misses",
-        "0 among 9 original audit-passed rows",
-        "PASS on sample"
+        "Hold broad launch; qualify a restricted pilot",
+        "Recommended next path: exclude affected scope, validate remaining tasks and demonstrate working controls."
       ]
     ],
-    "impact": "SUPPORTS SHIP READINESS OF THE CHECK: the known example is detectable. It does NOT justify shipping the agent: the flagged answer is still wrong.",
-    "sources": [
-      "03-eval-suites/eval-suite.md",
-      "03-eval-suites/eval-spec.md",
-      "evidence/pricing-replay.json"
-    ],
-    "notes": "Позитивний результат тут є, але щодо перевірки. Не стверджуй 100% загальну accuracy: тільки один known positive і мало релевантних negatives. Safety rule тут семантична перевірка, не незалежна code implementation. Три chat checks — не три production controls.",
-    "table_headers": [
-      "Evaluator",
-      "Detection result",
-      "False alarms",
-      "Status"
-    ]
-  },
-  {
-    "title": "One failed Hard gate blocks the proposed release",
-    "label": "04 · Apply the chosen policy · M4 gates + release criteria",
-    "points": [
-      "These thresholds are the PM’s chosen course release policy, not universal rules or stakeholder-approved production settings."
-    ],
-    "rows": [
-      [
-        "Pricing · Hard / Release",
-        "1 failing applicable answer",
-        "0 failures",
-        "FAIL → HOLD"
-      ],
-      [
-        "API · Soft / Staging",
-        "Supplied example fails",
-        "0% applicable failures",
-        "PAUSE / mitigate"
-      ],
-      [
-        "Latency · Soft / Staging",
-        "4.2s > 2.0s",
-        "Meet target or document exception",
-        "PAUSE / mitigate"
-      ],
-      [
-        "Slang · Advisory / PR",
-        "Prohibited slang present",
-        "0 matches",
-        "WARN only"
-      ],
-      [
-        "Legal refusal · No gate",
-        "Correct policy behavior",
-        "Follow policy",
-        "PASS"
-      ]
-    ],
-    "impact": "HOLD: pricing fails a non-overridable Hard gate. Soft exceptions and Advisory warnings cannot compensate for it.",
+    "impact": "Decision: HOLD the proposed broad rollout. A restricted pilot needs its own approval; the current evidence does not yet justify starting it.",
     "sources": [
       "04-eval-gates/launch-strategy.md",
-      "04-eval-gates/gate-map.md"
+      "evidence/managerial-decision.md"
     ],
-    "notes": "Ось правило прийняття рішення, яке пов’язує observations з rollout. Для API підписаний waiver не може відкрити P0 без захисту: вимкнути automated comparisons і human routing або fix. Pricing code перевіряє число, judge — умови; reference owner підтверджує freshness. Speed — один sample, не p95.",
-    "table_headers": [
-      "Gate / stage",
-      "Observed result",
-      "Chosen bar",
-      "Launch consequence"
-    ]
+    "notes": "Тут прибираємо circularreasoning: «Hard тому HOLD». Material pricing concern — potential wrongpurchasing, але одна помилка не доводить системність. Не видаємо disabledpricing за готове featureflag. Rootcause може бути sourcefreshness retrieval generation. M4 initial Hardpolicy переглядаємо для scope: failed pricing блокує candidate що включає pricing, не будь-який isolated scope."
   },
   {
-    "title": "The proposed monitoring allocation is affordable",
-    "label": "05 · Resource feasibility · M5 budget",
+    "title": "Keep checks proportional to the risk and cost",
+    "label": "04 · Control plan · M3–M5",
     "points": [
-      "Tone: $6,500 weekly audit; regional quality: $5,500 weekly audit; timing: $1,250 code check. These are planned course costs.",
-      "Weekly audits accept delayed detection. A full $65,000 online tone tier would push online spend to $220,000."
+      "Pricing: current-source numeric check plus review of unsupported terms. Investigate retrieval and source freshness.",
+      "API: validate meaning against specifications; exclude automated comparisons until fixed or safely routed.",
+      "Speed: time representative tasks. Slang warns; policy-compliant refusal passes.",
+      "Budget: $155,000 online; $168,250 total planned. Online cap $200,000. Weekly audits accept detection delay."
     ],
-    "rows": [
-      [
-        "Online fabrication + context",
-        "$85,000 + $70,000 = $155,000",
-        "≤$200,000 online cap",
-        "PASS"
-      ],
-      [
-        "Online eval count",
-        "2",
-        "At most 3",
-        "PASS"
-      ],
-      [
-        "All listed checks",
-        "$168,250 total",
-        "Includes $13,250 fallback checks",
-        "PLAN, not live spend"
-      ]
-    ],
-    "impact": "SUPPORTS SHIP ON COST: the planned online allocation fits the cap. It does not establish quality or override the failed pricing gate.",
+    "impact": "Supports a feasible control plan—not launch readiness. Confirm implementation and staffing before relying on these protections.",
     "sources": [
+      "03-eval-suites/eval-spec.md",
+      "04-eval-gates/launch-strategy.md",
       "05-scale/lab-2-budget-crisis.md"
     ],
-    "notes": "Бюджет не треба перетворювати на ще один HOLD: він PASS за affordability. Але це necessary support, не sufficient readiness. Додатковий online tone65k не влазить у online headroom45k. Portfolio іншого продукту зберігається у evidence bundle, а не використовується для readiness Ascend IQ.",
-    "table_headers": [
-      "Budget check",
-      "Planned amount",
-      "Constraint",
-      "Status"
-    ]
+    "notes": "M5 dollars — listed costs planning. $85k fabrication+$70kcontext155k. Toneaudit6500 bias5500 timer1250total168250. Це не гарантія і не proof controls працюють. M4 speed2s vs M5 longtask10s distinct. Correctlegalrefusal PASS за policy, slangeditable warning. Не приховуємо M2 API P0/M4Soft: не допускаємоunmitigated exposure.",
+    "headers": [],
+    "rows": []
   },
   {
-    "title": "Final recommendation: HOLD this broad rollout",
-    "label": "06 · Decision for the 50 accounts · M2 → M3 → M4 → M5",
-    "points": [
-      "Decisive chain: source $59 → agent $49 → chosen Hard bar 0 failures → one recorded failure → HOLD.",
-      "Engineering fixes pricing/source handling; the pricing-data owner confirms freshness; QA reruns the corrected answer and unsupported-term checks.",
-      "Reconsider rollout after all Hard gates pass and Soft failures are fixed or explicitly controlled. Agree owners, rollout stop rules and the next review date."
+    "title": "HOLD broad rollout; return with a testable pilot proposal",
+    "label": "05 · Decision, owners and release conditions",
+    "points": [],
+    "headers": [
+      "Owner / next step",
+      "Evidence required for the next decision"
     ],
     "rows": [
       [
-        "Agent pricing / Hard gate",
-        "FAIL",
-        "Decisive blocker",
-        "HOLD"
+        "Engineering + pricing-data owner",
+        "Explain the pricing defect; fix or exclude affected functionality; confirm current source."
       ],
       [
-        "Known-case detector",
-        "PASS on sample",
-        "Supports detection only",
-        "Not a launch pass"
+        "QA",
+        "Retest corrected outputs and representative in-scope tasks; report failures, timing and evaluator errors."
       ],
       [
-        "Online budget",
-        "PASS as plan",
-        "Supports affordability only",
-        "Not a launch pass"
+        "PM + Engineering",
+        "Define pilot scope, demonstrate exclusion/human routing and rollback; agree stop rules."
+      ],
+      [
+        "CPO + PM",
+        "Approve the scope-specific quality bar and review date. Start a pilot only after its entry criteria pass."
       ]
     ],
-    "impact": "HOLD TODAY ON THE SUPPLIED EVIDENCE—not by majority vote. A corrected build passing the agreed gates can change the decision; that result is not yet recorded.",
+    "impact": "What changes HOLD: passing results and working controls for an explicitly approved scope—not a relabeled old error or a written plan alone.",
     "sources": [
-      "06-culture/lab-1-ship-hold-memo.md",
-      "evidence/decision-register.md",
-      "04-eval-gates/launch-strategy.md"
+      "evidence/managerial-decision.md",
+      "06-culture/lab-1-ship-hold-memo.md"
     ],
-    "notes": "Не п’ять HOLD проти одного SHIP. Це система gates: один Hard failure вирішальний. Позитивні дані про detection та budget не ігноруємо, але вони про інші об’єкти. Пропозиція обмежена supplied batch, не unknown newer build. Конкретний ask: не approve broad rollout сьогодні; призначити fix/rerun і наступний review.",
-    "table_headers": [
-      "Evidence group",
-      "Result",
-      "What it proves",
-      "Decision weight"
-    ]
+    "notes": "Чіткий ask сьогодні: не approve broad50; призначити workowners і evidence reviewdate. Пілот може бути обмежений по accounts та capabilities, але його size/dateне вигадуємо. Hardbar0pricing застосовний коли scope включаєpricing; виключення лише при доведеному boundary й новомуapprovedcandidate. Далі масштабування based evidence, не автоматично."
   }
 ]

@@ -1,12 +1,12 @@
 {
   "source_commit": "6df9e89",
-  "slides": 6,
+  "slides": 5,
   "pricing_numeric_replay": {
     "applicable": 1,
     "failed": 1
   },
-  "recommendation": "HOLD on supplied course batch",
+  "recommendation": "HOLD unrestricted rollout; qualify restricted pilot, not yet approved",
   "live_agent_execution": false,
   "submission_performed": false,
-  "structure": "Every slide explicitly contributes to the 50-account SHIP/HOLD decision"
+  "structure": "Task, evidence/limits, options, proportional controls/budget, next decision"
 }
