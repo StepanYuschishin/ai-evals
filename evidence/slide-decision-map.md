@@ -2,11 +2,11 @@
 
 | Слайд | Внесок у рішення про 50 акаунтів |
 |---|---|
-| 1. HOLD broad rollout to the 50 accounts | SHIP/HOLD impact: hold this broad rollout until the pricing Hard gate passes; this is not a verdict on an unseen newer build. |
-| 2. The pricing answer fails the non-negotiable bar | SHIP/HOLD impact: this single known Hard failure is sufficient to block the evaluated release, regardless of the overall audit score. |
-| 3. Speed and relevance still need a launch decision | SHIP/HOLD impact: after fixing pricing, resolve or explicitly mitigate the Soft failures; warnings and correct refusals alone should not stop rollout. |
-| 4. Protect the client before approving an exception | SHIP/HOLD impact: a documented override can narrow a Soft risk; it cannot bypass the pricing Hard failure or substitute for working controls. |
-| 5. The protection plan fits the online budget | SHIP/HOLD impact: the planned protection is within budget, but funding does not turn a failed gate into a pass; audit delay remains an explicit trade-off. |
-| 6. Approve HOLD now; revisit with corrected-build evidence | SHIP/HOLD impact: a corrected build passing the Hard bar, with Soft risks resolved or controlled, can support reconsidering rollout; today’s supplied evidence supports HOLD. |
+| 1. Should Ascend IQ launch to 50 enterprise accounts? | DECISION REQUIRED: approve or hold this rollout. Success means fast, source-supported answers—not speed alone. |
+| 2. The supplied answers contain decision-relevant failures | HOLD EVIDENCE: pricing is wrong and the speed target is missed. The correct legal refusal supports compliance; it does not cancel the failures. |
+| 3. The pricing evaluator detects the known failure | SUPPORTS SHIP READINESS OF THE CHECK: the known example is detectable. It does NOT justify shipping the agent: the flagged answer is still wrong. |
+| 4. One failed Hard gate blocks the proposed release | HOLD: pricing fails a non-overridable Hard gate. Soft exceptions and Advisory warnings cannot compensate for it. |
+| 5. The proposed monitoring allocation is affordable | SUPPORTS SHIP ON COST: the planned online allocation fits the cap. It does not establish quality or override the failed pricing gate. |
+| 6. Final recommendation: HOLD this broad rollout | HOLD TODAY ON THE SUPPLIED EVIDENCE—not by majority vote. A corrected build passing the agreed gates can change the decision; that result is not yet recorded. |
 
 Портфельний приклад AI Report Summaries і окремий CI demo вилучені з основних слайдів: вони лишаються у повному пакеті джерел для запитань.

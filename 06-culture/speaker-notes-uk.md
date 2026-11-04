@@ -2,53 +2,53 @@
 
 Один сюжет: чи відкривати Ascend IQ для 50 enterprise-акаунтів. Кожен слайд дає аргумент для цього рішення. Модулі — лише джерела, не структура розповіді.
 
-## Слайд 1. HOLD broad rollout to the 50 accounts
+## Слайд 1. Should Ascend IQ launch to 50 enterprise accounts?
 
-Рішення стосується саме запропонованого broad rollout для 50 акаунтів. Понад $2.5m річної вартості акаунтів — контекст, не прогноз втрат. Далі показуємо конкретну причину HOLD, а не переказ шести модулів.
+Це саме завдання, а не ще один лабораторний exercise. Спочатку пояснюємо продукт і business problem. Далі перевіряємо готовність за labs. Понад $2.5m account value — контекст, не прогноз втрат. Твої метрики: latency, hallucination, UX trust.
 
-Вплив на рішення: SHIP/HOLD impact: hold this broad rollout until the pricing Hard gate passes; this is not a verdict on an unseen newer build.
+Вплив на рішення: DECISION REQUIRED: approve or hold this rollout. Success means fast, source-supported answers—not speed alone.
 
-Джерела: evidence/business-brief.md, 01-evaluation-strategy/strategy-canvas.md, 06-culture/lab-1-ship-hold-memo.md
+Джерела: evidence/business-brief.md, 01-evaluation-strategy/strategy-canvas.md
 
-## Слайд 2. The pricing answer fails the non-negotiable bar
+## Слайд 2. The supplied answers contain decision-relevant failures
 
-Ключова різниця: evaluator PASS — спіймав неправильну ціну; agent FAIL — неправильно відповів. Hard — обрана PM policy для матеріальної помилки ціни. Один positive не доводить загальну detection accuracy. Відомі помилки агрегованих labels не змінюють цей конкретний приклад.
+Це результати агента, не evaluator. Для speed reference — заданий M4 task, а не M2 timing dataset. API не містить чисел у відповіді, тому просте numeric rule не перевіряє всю проблему. Початковий judge помилково покарав правильну відмову.
 
-Вплив на рішення: SHIP/HOLD impact: this single known Hard failure is sufficient to block the evaluated release, regardless of the overall audit score.
+Вплив на рішення: HOLD EVIDENCE: pricing is wrong and the speed target is missed. The correct legal refusal supports compliance; it does not cancel the failures.
 
-Джерела: 02-failure-discovery/audit-log.md, 03-eval-suites/eval-suite.md, 04-eval-gates/launch-strategy.md, evidence/pricing-replay.json
+Джерела: 02-failure-discovery/audit-log.md, 04-eval-gates/gate-map.md
 
-## Слайд 3. Speed and relevance still need a launch decision
+## Слайд 3. The pricing evaluator detects the known failure
 
-Latency не загублена: це частина базової обіцянки агента. 4.2s — окремий заданий приклад, не production distribution. API Soft не дозволяє віддати клієнтам незахищений P0: за override API функція має бути вимкнена, питання — до людини. Slang і правильна відмова не дорівнюють матеріальній pricing-помилці.
+Позитивний результат тут є, але щодо перевірки. Не стверджуй 100% загальну accuracy: тільки один known positive і мало релевантних negatives. Safety rule тут семантична перевірка, не незалежна code implementation. Три chat checks — не три production controls.
 
-Вплив на рішення: SHIP/HOLD impact: after fixing pricing, resolve or explicitly mitigate the Soft failures; warnings and correct refusals alone should not stop rollout.
+Вплив на рішення: SUPPORTS SHIP READINESS OF THE CHECK: the known example is detectable. It does NOT justify shipping the agent: the flagged answer is still wrong.
 
-Джерела: 04-eval-gates/gate-map.md, 04-eval-gates/launch-strategy.md, 01-evaluation-strategy/strategy-canvas.md
+Джерела: 03-eval-suites/eval-suite.md, 03-eval-suites/eval-spec.md, evidence/pricing-replay.json
 
-## Слайд 4. Protect the client before approving an exception
+## Слайд 4. One failed Hard gate blocks the proposed release
 
-Це запропонований план, не вже реалізовані feature flags. Для запуску необхідні докази реалізації потрібних controls. Freshness підтверджує pricing-data owner; fixture59 не гарантує, що live page ніколи не змінилася. QA rerun має перевірити виправлену відповідь, не тільки старий failure.
+Ось правило прийняття рішення, яке пов’язує observations з rollout. Для API підписаний waiver не може відкрити P0 без захисту: вимкнути automated comparisons і human routing або fix. Pricing code перевіряє число, judge — умови; reference owner підтверджує freshness. Speed — один sample, не p95.
 
-Вплив на рішення: SHIP/HOLD impact: a documented override can narrow a Soft risk; it cannot bypass the pricing Hard failure or substitute for working controls.
+Вплив на рішення: HOLD: pricing fails a non-overridable Hard gate. Soft exceptions and Advisory warnings cannot compensate for it.
 
-Джерела: 03-eval-suites/eval-spec.md, 04-eval-gates/launch-strategy.md, evidence/decision-register.md
+Джерела: 04-eval-gates/launch-strategy.md, 04-eval-gates/gate-map.md
 
-## Слайд 5. The protection plan fits the online budget
+## Слайд 5. The proposed monitoring allocation is affordable
 
-Ціни задані в навчальному сценарії. Online headroom45k, total168250. Тон — 50 кейсів/тиждень; fairness50 порівну US/APAC. Немає підстав стверджувати, що перевірки вже працюють чи клієнти задоволені. Portfolio coverage іншого продукту не тягнемо на основні слайди.
+Бюджет не треба перетворювати на ще один HOLD: він PASS за affordability. Але це necessary support, не sufficient readiness. Додатковий online tone65k не влазить у online headroom45k. Portfolio іншого продукту зберігається у evidence bundle, а не використовується для readiness Ascend IQ.
 
-Вплив на рішення: SHIP/HOLD impact: the planned protection is within budget, but funding does not turn a failed gate into a pass; audit delay remains an explicit trade-off.
+Вплив на рішення: SUPPORTS SHIP ON COST: the planned online allocation fits the cap. It does not establish quality or override the failed pricing gate.
 
 Джерела: 05-scale/lab-2-budget-crisis.md
 
-## Слайд 6. Approve HOLD now; revisit with corrected-build evidence
+## Слайд 6. Final recommendation: HOLD this broad rollout
 
-Фінальний ask: погодити HOLD саме broad rollout, призначити власників і дату review. Не просимо абстрактно більше даних: потрібен конкретний pricing pass та рішення щодо Soft. Це не автоматичний SHIP після одного виправленого рядка; потрібні всі погоджені release criteria.
+Не п’ять HOLD проти одного SHIP. Це система gates: один Hard failure вирішальний. Позитивні дані про detection та budget не ігноруємо, але вони про інші об’єкти. Пропозиція обмежена supplied batch, не unknown newer build. Конкретний ask: не approve broad rollout сьогодні; призначити fix/rerun і наступний review.
 
-Вплив на рішення: SHIP/HOLD impact: a corrected build passing the Hard bar, with Soft risks resolved or controlled, can support reconsidering rollout; today’s supplied evidence supports HOLD.
+Вплив на рішення: HOLD TODAY ON THE SUPPLIED EVIDENCE—not by majority vote. A corrected build passing the agreed gates can change the decision; that result is not yet recorded.
 
-Джерела: 06-culture/lab-1-ship-hold-memo.md, 04-eval-gates/launch-strategy.md, evidence/decision-register.md
+Джерела: 06-culture/lab-1-ship-hold-memo.md, evidence/decision-register.md, 04-eval-gates/launch-strategy.md
 
 ## Текст короткого виступу
 
