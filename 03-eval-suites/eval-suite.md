@@ -59,3 +59,11 @@ Product shall not answer before the clarification of all existing certificates o
 | 18 | 0 | 0 | 0 | The reference notes that backend architecture is not listed and contains no SOC certification details. |
 | 19 | 0 | 0 | 0 | The reference contains release notes, not SOC certification details. |
 | 20 | 0 | 0 | 0 | The reference contains a private-company valuation, not SOC certification details. |
+
+## Final-project interpretation
+The row-by-row table records 1 = pass, 0 = fail. Rule and Safety each failed all 20 rows. The old Judge passed row 8 because it checked the reference in isolation. The summary and checks are poorly scoped; these outputs do not validate an SOC failure detector.
+
+The replacement in eval-spec.md compares query, answer and reference together. It has NOT been independently rerun or calibrated. Caught/missed/false-alarm counts for that replacement remain NOT MEASURED. Do not present 0 false alarms or 100% detection as achieved results.
+
+## Required next run
+QA must adjudicate all labels, rerun the replacement on the 20 rows, and test a separate held-out set with positive, negative, uncertain and unrelated cases. Record TP, FN, FP, TN and review both flagged and passed examples. Production readiness also requires broader robustness cases and separate trajectory/calibration evidence. No executed trajectory scorecard or independent judge-calibration result for this revised SOC evaluator is recorded in this repo.

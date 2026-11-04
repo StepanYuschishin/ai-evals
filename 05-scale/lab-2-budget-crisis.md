@@ -27,3 +27,11 @@
 - **Cheaper check:** Before every release, run a representative suite of long, multi-step queries and automatically flag complete responses taking more than 10 seconds. Record the failure rate and P95 response time.
 - **Why it’s enough:** A timer directly detects the stated latency failure without an LLM judge. Release tests may miss production load spikes, so retain production timing logs and review them weekly. This is acceptable temporarily for the stated P3 risk.
 
+
+## Final-project reconciliation
+- Online allocation: $85,000 + $70,000 = $155,000 per quarter; 2 of at most 3 online evals.
+- Audits and code check: $6,500 + $5,500 + $1,250 = $13,250.
+- Total listed allocation: $168,250. Online-cap headroom: $45,000; if the same cap covered all costs, headroom would be $31,750.
+- Upgrading tone from audit to its listed $65,000 online tier raises online spend to $220,000, exceeding the cap by $20,000. Keep the proposed split pending evidence or a separately costed alternative; do not assume a third online tier is affordable.
+- Regional audit should compare matched question types and comparable source availability. Weekly sampling can miss rare incidents; escalate confirmed material failures immediately.
+- These are course cost assumptions and proposed coverage, not contracted spending or evidence that checks are operating.

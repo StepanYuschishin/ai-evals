@@ -6,15 +6,18 @@
 
 | Dimension | main | PR | Δ | Floor | Max reg | Blocking | Result |
 |---|---:|---:|---:|---:|---:|---|---|
-| Faithfulness (grounding) | 96 | 87 | −9 | 90 | 3 | yes | _PASS / FAIL_ |
-| Task completion | 92 | 93 | +1 | 85 | 5 | yes | _PASS / FAIL_ |
-| Tool selection | 90 | 88 | −2 | 80 | 5 | yes | _PASS / FAIL_ |
-| Safety / policy | 99 | 99 | 0 | 98 | 1 | yes | _PASS / FAIL_ |
-| Latency (p95) | 84 | 80 | −4 | 70 | 8 | no | _PASS / FAIL_ |
-| Cost per task | 88 | 82 | −6 | 70 | 10 | no | _PASS / FAIL_ |
+| Faithfulness (grounding) | 96 | 87 | −9 | 90 | 3 | yes | FAIL |
+| Task completion | 92 | 93 | +1 | 85 | 5 | yes | PASS |
+| Tool selection | 90 | 88 | −2 | 80 | 5 | yes | PASS |
+| Safety / policy | 99 | 99 | 0 | 98 | 1 | yes | PASS |
+| Latency (p95) | 84 | 80 | −4 | 70 | 8 | no | PASS |
+| Cost per task | 88 | 82 | −6 | 70 | 10 | no | PASS |
 
-**Gate result:** _BLOCKED / PASSED_
+**Gate result:** BLOCKED
 
 ## Merge decision
 
 _e.g. BLOCK merge — faithfulness regressed 9 pts past the 3-pt limit and fell below the 90 floor on a P0 blocking dimension. Warn-only dimensions (latency, cost) don't block._
+
+## Final-project interpretation
+This is the supplied PR #218 replay scenario, not a fresh run against the learner's model. Block merge: grounding falls from 96 to 87, below the 90 floor and beyond the allowed 3-point regression. Other dimensions pass the supplied score rules. Latency and cost here are normalized scores, not milliseconds or dollars. No actual CI integration is demonstrated.

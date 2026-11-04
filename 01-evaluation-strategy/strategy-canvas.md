@@ -1,34 +1,23 @@
-# AI Evaluation Strategy Canvas
+# AI Evaluation Strategy Canvas · Ascend IQ
 
-> Repo file `ai-evals/01-evaluation-strategy/strategy-canvas.md` (the repo is your submission).
-> Becomes the **Strategy Canvas** slide of the final pitch deck you assemble in Module 6.
->
-> Fill this with the **AI Evaluation Strategy Canvas** tool, then **Copy markdown** and paste it over this file. The headings below mirror the tool's output exactly.
+Status: final-project recommendation reconstructed from the course scenario and M2–M5 artifacts; PM approval pending. Proposed controls are not implemented controls.
 
 ## 1. Product Strategy, The Context
-
-- **Target user:** _…_
-- **Key use case:** _…_
-- **Value proposition:** _…_
+- Target user: VP-level strategists and product leaders at enterprise clients.
+- Key use case: answer market-intelligence questions using verified research, product documentation and reviews.
+- Value proposition: reduce time spent finding decision-relevant information while protecting trust in a premium intelligence service.
 
 ## 2. Measurements, The Execution
+User promise: Ascend IQ gives enterprise decision-makers relevant, source-supported answers quickly, preserving uncertainty and material qualifications.
 
-- **User promise.** _For [user], [product] promises to [outcome] so that [business value]._
-- **Top 3 trust metrics:**
-  - **_Metric 1_**, _definition / measurable signal_
-  - **_Metric 2_**, _definition / measurable signal_
-  - **_Metric 3_**, _definition / measurable signal_
-- **Why these three:** _…_
+| Top trust metric | Measurement | Evidence boundary |
+|---|---|---|
+| Hallucination / factual grounding | Unsupported, contradicted or outdated material claims divided by reviewed answers | M2 is a selected 20-answer audit, not a production-rate estimate |
+| Robustness / task completion | Applicable requests completed without critical omissions or unjustified refusal | SOC row 8 is one known failure, not general robustness coverage |
+| UX trust | Answers with unsupported certainty or prohibited tone divided by reviewed answers | Tone needs context-sensitive review in addition to simple slang rules |
 
-## 3. Strategic Trade-Offs, The Cost
+Why these three: incorrect facts, failed requests and misplaced confidence undermine vendor decisions and enterprise retention. Monitor latency separately; text-only audits cannot measure it.
 
-### Trade-off 1 · _Metric A ↔ Metric B_
-
-_We prioritize A over B because … (business justification)._
-
-### Trade-off 2 · _Metric C ↔ Metric D_
-
-_We prioritize C over D because … (business justification)._
-
----
-_Generated from the AI Evaluation Strategy Canvas, M1 lab tool, AI Evals Certification._
+## 3. Strategic Trade-Offs
+- Prioritize source support and task completion over speed when a faster answer would mislead a client. Use explicit uncertainty or human escalation when evidence is insufficient.
+- Fund continuous fabrication and context checks first; temporarily use weekly tone and regional-quality audits. This accepts detection delay, not absence of risk. Review after two weeks of operation.

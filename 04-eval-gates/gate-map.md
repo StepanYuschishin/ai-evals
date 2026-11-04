@@ -64,3 +64,17 @@ Change Row 14 first: it blocks correct safety behavior and creates pressure to v
 - What's true: G2 reviews: the three complaints are correct. The answer took 4.2 seconds, and the target is 2.0.
 - Automated eval: Fail · Latency. Exceeded the maximum response time.
 - My call: Soft at Pull Request. P1, misleading reply
+
+## Recommended consolidated map · pending PM approval
+This table supersedes the initial map for the proposed final plan; the historical choices above remain visible.
+
+| M4 row | Call | Placement | Business rationale |
+|---|---|---|---|
+| 1 pricing | Soft | Staging | Prevent misleading purchasing decisions; PR fixtures alone cannot establish source freshness |
+| 14 policy refusal | No gate on this correct answer | PR policy regression | Avoid blocking required safety behavior |
+| 17 slang draft | Advisory | Pull Request | Warn about executive credibility without blocking an editable draft |
+| 5 unconfirmed speaker | Soft | Staging | Avoid false confirmations affecting client plans; structured status checks may run at PR |
+| 8 API comparison | Soft | Staging | Prevent distorted vendor comparisons; use earlier numeric checks when applicable |
+| 3 correct but slow answer | Advisory | Staging | Measure delay under representative load; one 4.2-second response is not sufficient to establish critical impact |
+
+SOC is audit/M3 row 8, NOT M4 API row 8. The SOC Hard gate in launch-strategy.md is conditional: M2 currently classifies it P1, and a validated evaluator plus approved P0 justification are prerequisites for Release placement.
