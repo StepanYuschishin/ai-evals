@@ -3,6 +3,8 @@
 **Recommendation: HOLD broad rollout on the supplied course evidence.** Row 1 quotes $49 against a current $59 reference and fails the chosen zero-failure pricing Hard gate. The successful detector result is not evidence that the answer was fixed.
 
 ## Presentation and preparation
+The main presentation has 6 slides. Each ends with its explicit impact on the 50-account SHIP/HOLD decision. Full lab details remain in the presenter edition and evidence bundle.
+
 - [Audience slides](final-presentation.html)
 - [Presenter slides with full evidence and Ukrainian notes](presenter-with-evidence.html)
 - [Ukrainian 4–5 minute speech](06-culture/speaker-notes-uk.md)

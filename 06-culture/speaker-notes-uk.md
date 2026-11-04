@@ -1,68 +1,65 @@
-# Виступ · 4–5 хвилин
+# Виступ · 6 слайдів · приблизно 3–4 хвилини
 
-## Головний ланцюжок
-Бізнес-проблема → promise і метрики → приклади помилок → перевірка детектора → gate → результат проти bar → бюджет і дія.
+Один сюжет: чи відкривати Ascend IQ для 50 enterprise-акаунтів. Кожен слайд дає аргумент для цього рішення. Модулі — лише джерела, не структура розповіді.
 
-## Текст
-«Моя рекомендація — поки не відкривати Ascend IQ для всіх 50 акаунтів на підставі цього навчального batch. Причина конкретна: pricing-відповідь не проходить наш Hard gate.
+## Слайд 1. HOLD broad rollout to the 50 accounts
 
-Ascend Analytics продає перевірену ринкову інформацію. Платформа перевантажена; клієнтам довго шукати потрібні інсайти. Ascend IQ має відповідати на питання за секунди і підтримати retention. Але швидкість має цінність лише разом із правильністю відповіді. Тому я вибрав Latency, Hallucination Rate та UX Trust.
+Рішення стосується саме запропонованого broad rollout для 50 акаунтів. Понад $2.5m річної вартості акаунтів — контекст, не прогноз втрат. Далі показуємо конкретну причину HOLD, а не переказ шести модулів.
 
-У M2 ми порівняли 20 відповідей із джерелами. Наприклад, агент назвав ціну $49, хоча source вже показує $59. У API-порівнянні він замінив факти 500 проти 1,000 запитів на хвилину непідтвердженим маркетинговим формулюванням. Початковий judge також помилився: юридична відмова була правильною за політикою. Отже, оцінювача теж треба перевіряти; 20 відібраних прикладів не дають production accuracy.
+Вплив на рішення: SHIP/HOLD impact: hold this broad rollout until the pricing Hard gate passes; this is not a verdict on an unseen newer build.
 
-У M3 я сфокусувався на неправильній ціні. Усі три перевірки спіймали один відомий pricing-кейс. Для числової помилки достатньо дешевого rule check; judge потрібний для умов і змісту. Але тут важливе розрізнення: перевірка виявила погану відповідь, а не виправила її.
+Джерела: evidence/business-brief.md, 01-evaluation-strategy/strategy-canvas.md, 06-culture/lab-1-ship-hold-memo.md
 
-У M4 я задав Hard bar — нуль неправильних актуальних pricing-відповідей. У нас є одна. Тому поточний результат FAIL. Це прямий зв’язок між даними і HOLD. Крім того, відповідь із review-summary зайняла 4.2 секунди проти target 2.0. Це Soft failure, один вимір, не p95. Сленг дає warning; правильна відмова не повинна блокуватись.
+## Слайд 2. The pricing answer fails the non-negotiable bar
 
-У M5 я розподілив бюджет: $85k на fabrication і $70k на context specificity. Разом $155k online, а з аудитами й timing check — $168,250. Tone і регіональну якість перевіряємо вибірково, визнаючи затримку виявлення. Timing не потребує дорогого LLM judge.
+Ключова різниця: evaluator PASS — спіймав неправильну ціну; agent FAIL — неправильно відповів. Hard — обрана PM policy для матеріальної помилки ціни. Один positive не доводить загальну detection accuracy. Відомі помилки агрегованих labels не змінюють цей конкретний приклад.
 
-Щоб змінити рішення, мені потрібний результат виправленої версії: актуальна source-supported ціна, відсутність непідтверджених умов, проходження Hard gate і вирішення або обмеження інших Soft failures. Мій запит — погодити відповідальних і дату повторного review. Я не стверджую, що агент назавжди неготовий: саме надані докази поки не дозволяють підписати широкий запуск».
+Вплив на рішення: SHIP/HOLD impact: this single known Hard failure is sufficient to block the evaluated release, regardless of the overall audit score.
 
-## До кожного слайду
-### 1. Hold broad rollout on the supplied evidence
-Рішення тепер спирається на конкретний FAIL: $49 проти $59, а не на абстрактну відсутність доказів. Це висновок про наданий batch, не про невідому нову версію.
-Джерела: 02-failure-discovery/audit-log.md, 04-eval-gates/launch-strategy.md, evidence/business-brief.md
+Джерела: 02-failure-discovery/audit-log.md, 03-eval-suites/eval-suite.md, 04-eval-gates/launch-strategy.md, evidence/pricing-replay.json
 
-### 2. Clients pay for verified market intelligence
-Спочатку поясни продукт: платформа містить дослідження, ціни, відгуки. Агент скорочує ручний пошук. 50 акаунтів і понад $50k/рік — умови brief, не реальна аналітика.
-Джерела: 01-evaluation-strategy/strategy-canvas.md, evidence/business-brief.md
+## Слайд 3. Speed and relevance still need a launch decision
 
-### 3. Success means fast, grounded and trustworthy answers
-Це твої три метрики з оновленого M1. Не кажи, що вони всі вже виміряні. Time-to-insight є бізнес-ціллю, response latency — лише її частиною.
-Джерела: 01-evaluation-strategy/strategy-canvas.md
+Latency не загублена: це частина базової обіцянки агента. 4.2s — окремий заданий приклад, не production distribution. API Soft не дозволяє віддати клієнтам незахищений P0: за override API функція має бути вимкнена, питання — до людини. Slang і правильна відмова не дорівнюють матеріальній pricing-помилці.
 
-### 4. The audit provides examples, not a production accuracy rate
-Сильний доказ — самі приклади. 55% не називай production failure rate. Funding і colors ще мають неоднозначні labels; головне рішення не залежить від них.
-Джерела: 02-failure-discovery/audit-log.md, 02-failure-discovery/failure-taxonomy.md
+Вплив на рішення: SHIP/HOLD impact: after fixing pricing, resolve or explicitly mitigate the Soft failures; warnings and correct refusals alone should not stop rollout.
 
-### 5. The pricing check catches the known error
-Це оцінка evaluator на одному known positive, не 100% загальна точність. Семантичне safety rule не стало кодом від назви. Numeric replay справді виконаний, але на тому самому fixture.
-Джерела: 03-eval-suites/eval-suite.md, 03-eval-suites/eval-spec.md, evidence/pricing-replay.json
+Джерела: 04-eval-gates/gate-map.md, 04-eval-gates/launch-strategy.md, 01-evaluation-strategy/strategy-canvas.md
 
-### 6. Detecting a bad answer does not fix it
-Тут головний логічний міст. Evaluator PASS означає, що він спіймав помилку. Agent/gate FAIL означає, що відповідь лишилася неправильною. Не плутай ці дві оцінки.
-Джерела: 03-eval-suites/eval-suite.md, 04-eval-gates/launch-strategy.md
+## Слайд 4. Protect the client before approving an exception
 
-### 7. Each gate has a different response
-P0 pricing — прийнята PM policy з M2/M4, не універсальний закон про будь-яку ціну. API taxonomy P0 vs Soft узгоджуємо лише через відсутність незахищеної експозиції: функція вимкнена, не просто підписаний waiver.
-Джерела: 04-eval-gates/gate-map.md, 04-eval-gates/launch-strategy.md
+Це запропонований план, не вже реалізовані feature flags. Для запуску необхідні докази реалізації потрібних controls. Freshness підтверджує pricing-data owner; fixture59 не гарантує, що live page ніколи не змінилася. QA rerun має перевірити виправлену відповідь, не тільки старий failure.
 
-### 8. The supplied speed example misses its target
-Не випускай latency з історії: саме швидкість мотивує агента. Але не кажи, що клієнти вже йдуть через ці конкретні 4.2 секунди: цього немає в даних.
-Джерела: 04-eval-gates/gate-map.md, 04-eval-gates/launch-strategy.md, 05-scale/lab-2-budget-crisis.md
+Вплив на рішення: SHIP/HOLD impact: a documented override can narrow a Soft risk; it cannot bypass the pricing Hard failure or substitute for working controls.
 
-### 9. Fund the expensive checks where meaning matters
-Це навчальна калькуляція, не оплачені контракти. Tone 50/тиждень, bias 50/тиждень 25US/25APAC. Є detection delay і rare misses; $45k не означає, що повний третій tier доступний.
+Джерела: 03-eval-suites/eval-spec.md, 04-eval-gates/launch-strategy.md, evidence/decision-register.md
+
+## Слайд 5. The protection plan fits the online budget
+
+Ціни задані в навчальному сценарії. Online headroom45k, total168250. Тон — 50 кейсів/тиждень; fairness50 порівну US/APAC. Немає підстав стверджувати, що перевірки вже працюють чи клієнти задоволені. Portfolio coverage іншого продукту не тягнемо на основні слайди.
+
+Вплив на рішення: SHIP/HOLD impact: the planned protection is within budget, but funding does not turn a failed gate into a pass; audit delay remains an explicit trade-off.
+
 Джерела: 05-scale/lab-2-budget-crisis.md
 
-### 10. Portfolio coverage is a separate exercise
-Це appendix-матеріал для вимоги шести модулів. Не аргумент про якість Ascend IQ. Не витрачай на це багато часу в основному виступі.
-Джерела: 05-scale/lab-1-coverage-matrix.md
+## Слайд 6. Approve HOLD now; revisit with corrected-build evidence
 
-### 11. Launch changes when the evidence changes
-Запит на зустрічі: погодити HOLD саме broad rollout на поточних даних, власників і дату повторного evidence review. Моя позиція зміниться, коли є результати виправленої версії.
-Джерела: 06-culture/lab-1-ship-hold-memo.md, 04-eval-gates/launch-strategy.md
+Фінальний ask: погодити HOLD саме broad rollout, призначити власників і дату review. Не просимо абстрактно більше даних: потрібен конкретний pricing pass та рішення щодо Soft. Це не автоматичний SHIP після одного виправленого рядка; потрібні всі погоджені release criteria.
 
-### 12. The evidence trail is available for every claim
-CI приклад пояснює per-dimension blocking. Не використовуй його як додатковий реальний вимір готовності агента. Для кожного спірного рішення є register з причиною і межею доказу.
-Джерела: 04-eval-gates/lab-ci-gate-policy.md, evidence/decision-register.md
+Вплив на рішення: SHIP/HOLD impact: a corrected build passing the Hard bar, with Soft risks resolved or controlled, can support reconsidering rollout; today’s supplied evidence supports HOLD.
+
+Джерела: 06-culture/lab-1-ship-hold-memo.md, 04-eval-gates/launch-strategy.md, evidence/decision-register.md
+
+## Текст короткого виступу
+
+«Моя рекомендація — HOLD для широкого відкриття Ascend IQ на 50 enterprise-акаунтів на основі наданих даних. Вони платять понад $50k на рік за перевірену інформацію; агент має прискорити доступ до неї і підтримати retention. Він повинен бути і швидким, і правильним.
+
+Конкретний blocker — pricing. Агент назвав $49, хоча reference містить $59, і додав непідтверджені умови. Наш обраний Hard gate допускає нуль таких помилок. Одна помилка є — отже FAIL. У M3 перевірки спіймали цей кейс, але це успіх детектора, не доказ виправлення агента.
+
+Інші результати теж впливають на запуск. Коректна відповідь про відгуки зайняла 4.2 секунди проти target 2.0. API-порівняння не передає перевірені ліміти. Це Soft failures, які потрібно виправити або контрольовано обмежити. Сленг у чернетці дає warning, а правильну юридичну відмову взагалі не блокуємо.
+
+Для pricing потрібні актуальний source, числова перевірка та оцінка умов. API override може дозволити інші можливості лише з вимкненими automated comparisons та human routing. Він не дозволяє обійти pricing Hard failure. Controls ще треба продемонструвати, вони не виникають від написаного документа.
+
+План вкладається в бюджет: $155k online, $168,250 загалом. Для тону і regional quality використовуємо weekly audits, для часу — код. Це свідомий компроміс із затримкою виявлення, а не гарантія безпеки.
+
+Я прошу погодити HOLD broad rollout, власників pricing fix і rerun, дату наступного review. Коли виправлена версія пройде Hard bar, а Soft risks будуть усунені або контрольовані, ми переглянемо рішення про запуск».
